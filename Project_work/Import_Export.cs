@@ -20,7 +20,7 @@ namespace Project_work
                     Layer fromfilelayer = new Layer(work_layer_list.Count);
                     Bitmap orig = new Bitmap(FD.FileName);
                     Bitmap clone = new Bitmap(orig.Width, orig.Height,
-                                              System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+                                              System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
                     using (Graphics gr = Graphics.FromImage(clone))
                     {

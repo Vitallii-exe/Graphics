@@ -25,3 +25,4 @@ C:\Users\Виталий\source\repos\NewProject_work\Project_work\bin\Debug\AFor
 C:\Users\Виталий\source\repos\NewProject_work\Project_work\bin\Debug\AForge.Imaging.xml
 C:\Users\Виталий\source\repos\NewProject_work\Project_work\bin\Debug\AForge.Math.xml
 C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.csproj.CopyComplete
+C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.ColorCorrection.resources

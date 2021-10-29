@@ -3,10 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-using AForge.Imaging;
-using AForge.Imaging.Filters;
-using AForge.Imaging.Textures;
-
 namespace Project_work
 {
     public partial class Form1 : Form
@@ -54,6 +50,8 @@ namespace Project_work
             LayerVisualiser.UpdateLayersPreviews(ref work_layer_list, ref Layer_panel, ref CurrentLayerIndex);
             Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
             Work_space.Refresh();
+            Scale.Value = work_layer_list[CurrentLayerIndex].scale;
+            Scale_label.Text = String.Format("{0} %", Scale.Value);
         }
 
         private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -105,6 +103,9 @@ namespace Project_work
                 for (int i = 0; i < work_layer_list.Count; i++)  work_layer_list[i].preview.Tag = i;
                 Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
                 Work_space.Refresh();
+
+                Scale.Value = work_layer_list[CurrentLayerIndex].scale;
+                Scale_label.Text = String.Format("{0} %", Scale.Value);
             }
 
         }
@@ -121,6 +122,9 @@ namespace Project_work
                 for (int i = 0; i < work_layer_list.Count; i++) work_layer_list[i].preview.Tag = i;
                 Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
                 Work_space.Refresh();
+
+                Scale.Value = work_layer_list[CurrentLayerIndex].scale;
+                Scale_label.Text = String.Format("{0} %", Scale.Value);
             }
         }
 
@@ -322,11 +326,8 @@ namespace Project_work
 
         private void Color_correction_button_Click(object sender, EventArgs e)
         {
-            SaturationCorrection filter = new SaturationCorrection(0.5f);
-            Bitmap formatted_layer_bitmap = AForge.Imaging.Image.Clone(work_layer_list[CurrentLayerIndex].original, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            filter.ApplyInPlace(formatted_layer_bitmap);
-            work_layer_list[CurrentLayerIndex].original = AForge.Imaging.Image.Clone(formatted_layer_bitmap, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-            
+            ColorCorrection ColorCorrForm = new ColorCorrection(ref work_layer_list[CurrentLayerIndex].original);
+            ColorCorrForm.ShowDialog();
             Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
 
             Work_space.Refresh();
