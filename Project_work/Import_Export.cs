@@ -17,7 +17,7 @@ namespace Project_work
             {
                 try
                 {
-                    Layer fromfilelayer = new Layer(work_layer_list.Count);
+                    Layer fromfilelayer = new Layer();
                     Bitmap orig = new Bitmap(FD.FileName);
                     Bitmap clone = new Bitmap(orig.Width, orig.Height,
                                               System.Drawing.Imaging.PixelFormat.Format32bppArgb);

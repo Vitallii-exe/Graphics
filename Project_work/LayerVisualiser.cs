@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Project_work
@@ -17,38 +11,41 @@ namespace Project_work
             InitializeComponent();
         }
 
-        public static void UpdateLayersPreviews(ref List<Layer> _work_layer_list, ref Panel _layer_panel, ref int curr_layer_pos)
+        public static void UpdateLayersPreviews(ref List<Layer> workLayerList, ref Panel layerPanel, ref int currentLayerPosition)
         {
-            for (int i = 0; i < _work_layer_list.Count; i++)
+            for (int i = 0; i < workLayerList.Count; i++)
             {
-                int reversed_number = _work_layer_list.Count - i - 1;
-                _work_layer_list[i].preview.Location = new Point(20, reversed_number * 60);
-                _work_layer_list[i].visible_checkbox.Location = new Point(5, reversed_number * 60 + 15);
-                _work_layer_list[i].label_caption.Location = new Point(120, reversed_number * 60 + 15);
+                int reversedNumber = workLayerList.Count - i - 1;
+                workLayerList[i].preview.Size = new Size(80, 50);
+                workLayerList[i].preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+                workLayerList[i].isVisibleCheckbox.Checked = true;
 
-                if (curr_layer_pos == i)
+                workLayerList[i].preview.Location = new Point(20, reversedNumber * 60);
+                workLayerList[i].isVisibleCheckbox.Location = new Point(5, reversedNumber * 60 + 15);
+                workLayerList[i].labelCaption.Location = new Point(120, reversedNumber * 60 + 15);
+
+                if (currentLayerPosition == i)
                 {
-                    _work_layer_list[i].label_caption.Text = "Слой " + i.ToString() + " (Активный)";
+                    workLayerList[i].labelCaption.Text = "Слой " + i.ToString() + " (Активный)";
                 }
-                else _work_layer_list[i].label_caption.Text = "Слой " + i.ToString();
+                else workLayerList[i].labelCaption.Text = "Слой " + i.ToString();
 
-                _work_layer_list[i].preview.BackgroundImage = _work_layer_list[i].original;
+                workLayerList[i].preview.BackgroundImage = workLayerList[i].original;
             }
-            _layer_panel.Refresh();
+            layerPanel.Refresh();
         }
 
-        public static void AddVisualLayer(ref List<Layer> work_layer_list, ref int CurrentLayerIndex, ref Panel Layer_panel, ref PictureBox Work_space)
+        public static void AddVisualLayer(ref List<Layer> workLayerList, ref int currentLayerIndex, ref Panel layerPanel)
         {
-            Layer_panel.Controls.Clear();
-            UpdateLayersPreviews(ref work_layer_list, ref Layer_panel, ref CurrentLayerIndex);
-            for (int i = 0; i < work_layer_list.Count; i++)
+            layerPanel.Controls.Clear();
+            UpdateLayersPreviews(ref workLayerList, ref layerPanel, ref currentLayerIndex);
+            for (int i = 0; i < workLayerList.Count; i++)
             {
-                Layer_panel.Controls.Add(work_layer_list[i].preview);
-                Layer_panel.Controls.Add(work_layer_list[i].visible_checkbox);
-                Layer_panel.Controls.Add(work_layer_list[i].label_caption);
+                layerPanel.Controls.Add(workLayerList[i].preview);
+                layerPanel.Controls.Add(workLayerList[i].isVisibleCheckbox);
+                layerPanel.Controls.Add(workLayerList[i].labelCaption);
 
-                //work_layer_list[i].visible_checkbox.Click += EventHandler();
-                Layer_panel.Refresh();
+                layerPanel.Refresh();
             }
         }
     }

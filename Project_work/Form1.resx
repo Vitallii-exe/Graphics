@@ -329,7 +329,7 @@
         Jf8DPVF2B/3GcBwAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="Work_space.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="workSpace.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAByoAAAO/CAYAAACQu0G1AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAS
         dAAAEnQB3mYfeAAA/7JJREFUeF7snc2KnFUfB70XXz8uQRCRRIOLuPM+Z2UWjjFOdHRM9AYcFXQUZFBw

@@ -7,10 +7,10 @@ namespace Project_work
 {
     public partial class Form1 : Form
     {
-        enum instruments { Перемещение, Выделение, Обрезка, Кисть, Пипетка, Ластик };
-        enum states { Ждуприменения };
-        List<Layer> work_layer_list = new List<Layer>();
-        int CurrentLayerIndex = 0;
+        enum Instruments { Move, Select, Cut, BrushDraw, Pipitte, Eraser };
+        enum States { WaitToAccept };
+        List<Layer> workLayerList = new List<Layer>();
+        int сurrentLayerIndex = 0;
         public Form1()
         {
             InitializeComponent();
@@ -18,276 +18,274 @@ namespace Project_work
             new LayerVisualiser();
         }
 
-        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Import_Export.ImportFromFile(ref work_layer_list, ref Work_space);
-            CurrentLayerIndex = work_layer_list.Count - 1;
-            for (int i = 0; i < work_layer_list.Count; i++) {
-                work_layer_list[i].visible_checkbox.Click += new System.EventHandler(UpdateVisualLayers);
-                work_layer_list[i].preview.Tag = i;
-                work_layer_list[i].preview.Click += new System.EventHandler(UpdateActiveLayer);
-                LayerVisualiser.AddVisualLayer(ref work_layer_list, ref CurrentLayerIndex, ref Layer_panel, ref Work_space);
+            Import_Export.ImportFromFile(ref workLayerList, ref workSpace);
+            LayerVisualiser currentLayerVisualiser = new LayerVisualiser();
+            сurrentLayerIndex = workLayerList.Count - 1;
+            for (int i = 0; i < workLayerList.Count; i++) {
+                workLayerList[i].isVisibleCheckbox.Click += new System.EventHandler(UpdateVisualLayers);
+                workLayerList[i].preview.Tag = i;
+                workLayerList[i].preview.Click += new System.EventHandler(UpdateActiveLayer);
+                LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref Layer_panel);
             }
         }
 
         private void UpdateVisualLayers(object sender, EventArgs e)
         {
-            for (int i = 0; i < work_layer_list.Count; i++)
+            for (int i = 0; i < workLayerList.Count; i++)
             {
-                if (work_layer_list[i].visible != work_layer_list[i].visible_checkbox.Checked)
+                if (workLayerList[i].isVisible != workLayerList[i].isVisibleCheckbox.Checked)
                 {
-                    work_layer_list[i].visible = work_layer_list[i].visible_checkbox.Checked;
+                    workLayerList[i].isVisible = workLayerList[i].isVisibleCheckbox.Checked;
                 }
             }
-            Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
-            Work_space.Refresh();
+            workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+            workSpace.Refresh();
         }
 
         private void UpdateActiveLayer(object sender, EventArgs e) {
             Button from_sender = sender as Button;
-            CurrentLayerIndex = (int)from_sender.Tag;
+            сurrentLayerIndex = (int)from_sender.Tag;
             //LayerVisualiser.AddVisualLayer(ref work_layer_list, ref CurrentLayerIndex, ref Layer_panel, ref Work_space);
-            LayerVisualiser.UpdateLayersPreviews(ref work_layer_list, ref Layer_panel, ref CurrentLayerIndex);
-            Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
-            Work_space.Refresh();
-            Scale.Value = work_layer_list[CurrentLayerIndex].scale;
+            LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
+            workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+            workSpace.Refresh();
+            Scale.Value = workLayerList[сurrentLayerIndex].scale;
             Scale_label.Text = String.Format("{0} %", Scale.Value);
         }
 
-        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Import_Export.ExportToFile(ref work_layer_list, ref CurrentLayerIndex);
+            Import_Export.ExportToFile(ref workLayerList, ref сurrentLayerIndex);
         }
 
-        private void moving_instr_Click(object sender, EventArgs e)
+        private void MovingInstrClick(object sender, EventArgs e)
         {
             this.Cursor = Cursors.SizeAll;
-            work_layer_list[CurrentLayerIndex].Active_instr = (int)instruments.Перемещение;
+            workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.Move;
         }
 
-        private void brush_Click(object sender, EventArgs e)
+        private void BrushClick(object sender, EventArgs e)
         {
-            work_layer_list[CurrentLayerIndex].Active_instr = (int)instruments.Кисть;
-            work_layer_list[CurrentLayerIndex].layer_pen.Color = choose_color_button.BackColor;
+            workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.BrushDraw;
+            workLayerList[сurrentLayerIndex].layerPen.Color = choose_color_button.BackColor;
         }
 
-        private void create_area_Click(object sender, EventArgs e)
+        private void CreateAreaClick(object sender, EventArgs e)
         {
-            work_layer_list[CurrentLayerIndex].Active_instr = (int)instruments.Выделение;
+            workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.Select;
         }
 
-        private void Eraser_button_Click(object sender, EventArgs e)
+        private void EraserButtonClick(object sender, EventArgs e)
         {
-            work_layer_list[CurrentLayerIndex].Active_instr = (int)instruments.Ластик;
+            workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.Eraser;
         }
 
-        private void cropping_Click(object sender, EventArgs e)
+        private void CroppingClick(object sender, EventArgs e)
         {
-            work_layer_list[CurrentLayerIndex].Active_instr = (int)instruments.Обрезка;
+            workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.Cut;
         }
 
-        private void pipette_Click(object sender, EventArgs e)
+        private void ClickPipette(object sender, EventArgs e)
         {
-            work_layer_list[CurrentLayerIndex].Active_instr = (int)instruments.Пипетка;
+            workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.Pipitte;
         }
 
-        private void LayerUpButton_Click(object sender, EventArgs e)
+        private void ClickLayerButtonUp(object sender, EventArgs e)
         {
-            if (CurrentLayerIndex + 1 < work_layer_list.Count)
+            if (сurrentLayerIndex + 1 < workLayerList.Count)
             {
-                Layer Buff = work_layer_list[CurrentLayerIndex + 1];
-                work_layer_list[CurrentLayerIndex + 1] = work_layer_list[CurrentLayerIndex];
-                work_layer_list[CurrentLayerIndex] = Buff;
-                CurrentLayerIndex++;
-                LayerVisualiser.AddVisualLayer(ref work_layer_list, ref CurrentLayerIndex, ref Layer_panel, ref Work_space);
-                for (int i = 0; i < work_layer_list.Count; i++)  work_layer_list[i].preview.Tag = i;
-                Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
-                Work_space.Refresh();
+                Layer Buff = workLayerList[сurrentLayerIndex + 1];
+                workLayerList[сurrentLayerIndex + 1] = workLayerList[сurrentLayerIndex];
+                workLayerList[сurrentLayerIndex] = Buff;
+                сurrentLayerIndex++;
+                LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref Layer_panel);
+                for (int i = 0; i < workLayerList.Count; i++)  workLayerList[i].preview.Tag = i;
+                workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+                workSpace.Refresh();
 
-                Scale.Value = work_layer_list[CurrentLayerIndex].scale;
+                Scale.Value = workLayerList[сurrentLayerIndex].scale;
                 Scale_label.Text = String.Format("{0} %", Scale.Value);
             }
 
         }
 
-        private void LayerDownButton_Click(object sender, EventArgs e)
+        private void ClickLayerButtonDown(object sender, EventArgs e)
         {
-            if (CurrentLayerIndex - 1 > -1)
+            if (сurrentLayerIndex - 1 > -1)
             {
-                Layer Buff = work_layer_list[CurrentLayerIndex - 1];
-                work_layer_list[CurrentLayerIndex - 1] = work_layer_list[CurrentLayerIndex];
-                work_layer_list[CurrentLayerIndex] = Buff;
-                CurrentLayerIndex -= 1;
-                LayerVisualiser.AddVisualLayer(ref work_layer_list, ref CurrentLayerIndex, ref Layer_panel, ref Work_space);
-                for (int i = 0; i < work_layer_list.Count; i++) work_layer_list[i].preview.Tag = i;
-                Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
-                Work_space.Refresh();
+                Layer Buff = workLayerList[сurrentLayerIndex - 1];
+                workLayerList[сurrentLayerIndex - 1] = workLayerList[сurrentLayerIndex];
+                workLayerList[сurrentLayerIndex] = Buff;
+                сurrentLayerIndex -= 1;
+                LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref Layer_panel);
+                for (int i = 0; i < workLayerList.Count; i++) workLayerList[i].preview.Tag = i;
+                workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+                workSpace.Refresh();
 
-                Scale.Value = work_layer_list[CurrentLayerIndex].scale;
+                Scale.Value = workLayerList[сurrentLayerIndex].scale;
                 Scale_label.Text = String.Format("{0} %", Scale.Value);
             }
         }
 
-        private void choose_color_button_Click(object sender, EventArgs e)
+        private void ClickChooseColorButton(object sender, EventArgs e)
         {
             if (Choose_color.ShowDialog() == DialogResult.OK)
             {
-                work_layer_list[CurrentLayerIndex].layer_pen.Color = Choose_color.Color;
+                workLayerList[сurrentLayerIndex].layerPen.Color = Choose_color.Color;
                 choose_color_button.BackColor = Choose_color.Color;
             }
         }
 
-        private void Apply_button_Click(object sender, EventArgs e)
+        private void ClickApplyButton(object sender, EventArgs e)
         {
-            if (work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Обрезка
-                & work_layer_list[CurrentLayerIndex].Current_state == (int)states.Ждуприменения)
+            if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Cut
+                & workLayerList[сurrentLayerIndex].currentState == (int)States.WaitToAccept)
             {
-                Bitmap to_draw = work_layer_list[CurrentLayerIndex].ResizeBitmap(work_layer_list[CurrentLayerIndex].original, Work_space.Width, Work_space.Height,
-                                                               work_layer_list[CurrentLayerIndex].original.Width * work_layer_list[CurrentLayerIndex].scale / 100,
-                                                               work_layer_list[CurrentLayerIndex].original.Height * work_layer_list[CurrentLayerIndex].scale / 100,
-                                                               work_layer_list[CurrentLayerIndex].shift.X, work_layer_list[CurrentLayerIndex].shift.Y);
+                Bitmap to_draw = workLayerList[сurrentLayerIndex].ResizeBitmap(workLayerList[сurrentLayerIndex].original, workSpace.Width, workSpace.Height,
+                                                               workLayerList[сurrentLayerIndex].original.Width * workLayerList[сurrentLayerIndex].scale / 100,
+                                                               workLayerList[сurrentLayerIndex].original.Height * workLayerList[сurrentLayerIndex].scale / 100,
+                                                               workLayerList[сurrentLayerIndex].shift.X, workLayerList[сurrentLayerIndex].shift.Y);
 
-                work_layer_list[CurrentLayerIndex].original = work_layer_list[CurrentLayerIndex].CropBitmap(to_draw, work_layer_list[CurrentLayerIndex].selection);
-                work_layer_list[CurrentLayerIndex].shift = new Point(0, 0);
-                work_layer_list[CurrentLayerIndex].scale = 100;
+                workLayerList[сurrentLayerIndex].original = workLayerList[сurrentLayerIndex].CropBitmap(to_draw, workLayerList[сurrentLayerIndex].selection);
+                workLayerList[сurrentLayerIndex].shift = new Point(0, 0);
+                workLayerList[сurrentLayerIndex].scale = 100;
                 Scale.Value = 100;
 
-                Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
-                Work_space.Refresh();
+                workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+                workSpace.Refresh();
                 //Layer.AddVisualLayer(ref work_layer_list, ref CurrentLayerIndex, ref Layer_panel, ref Work_space);
             }
         }
 
-        private void Work_space_MouseDown(object sender, MouseEventArgs e)
+        private void MouseDownWorkSpace(object sender, MouseEventArgs e)
         {
-            Point relative_current_position = new Point((e.Location.X - work_layer_list[CurrentLayerIndex].shift.X) * 100 / work_layer_list[CurrentLayerIndex].scale,
-                                                            (e.Location.Y - work_layer_list[CurrentLayerIndex].shift.Y) * 100 / work_layer_list[CurrentLayerIndex].scale);
-            if (work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Выделение
-                | work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Обрезка)
+            Point relative_current_position = new Point((e.Location.X - workLayerList[сurrentLayerIndex].shift.X) * 100 / workLayerList[сurrentLayerIndex].scale,
+                                                            (e.Location.Y - workLayerList[сurrentLayerIndex].shift.Y) * 100 / workLayerList[сurrentLayerIndex].scale);
+            if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Select
+                | workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Cut)
             {
-                work_layer_list[CurrentLayerIndex].start_position_selection = e.Location;
+                workLayerList[сurrentLayerIndex].startPositionSelection = e.Location;
                 return;
             }
 
 
-            else if (work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Кисть)
+            else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.BrushDraw)
             {
-                work_layer_list[CurrentLayerIndex].last_position = relative_current_position;
+                workLayerList[сurrentLayerIndex].lastPosition = relative_current_position;
                 return;
             }
 
-            else if (work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Перемещение)
+            else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Move)
             {
-                work_layer_list[CurrentLayerIndex].start_position = Cursor.Position;
+                workLayerList[сurrentLayerIndex].startPosition = Cursor.Position;
                 return;
             }
         }
 
-        private void Work_space_MouseUp(object sender, MouseEventArgs e)
+        private void MouseUpWorkSpace(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 this.contextPicBox.Show(Cursor.Position.X, Cursor.Position.Y);
             }
-            else if (work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Выделение
-                     | work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Обрезка)
+            else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Select
+                     | workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Cut)
             {
-                work_layer_list[CurrentLayerIndex].Current_state = (int)states.Ждуприменения;
+                workLayerList[сurrentLayerIndex].currentState = (int)States.WaitToAccept;
 
-                Pen finished_selection_pen = work_layer_list[CurrentLayerIndex].selection_pen;
-                switch (work_layer_list[CurrentLayerIndex].Active_instr) {
-                    case (int)instruments.Обрезка:
+                Pen finished_selection_pen = workLayerList[сurrentLayerIndex].selectionPen;
+                switch (workLayerList[сurrentLayerIndex].activeInstrument) {
+                    case (int)Instruments.Cut:
                         finished_selection_pen.Brush = Brushes.Red;
                         break;
-                    case (int)instruments.Выделение:
+                    case (int)Instruments.Select:
                         finished_selection_pen.Brush = Brushes.Lime;
                         break;
                 }
-                using (Graphics g = Graphics.FromImage(Work_space.Image))
-                    g.DrawRectangle(finished_selection_pen, work_layer_list[CurrentLayerIndex].selection);
-                //Work_space.Image = work_layer_list[CurrentLayerIndex].CropBitmap((Bitmap)Work_space.Image, work_layer_list[CurrentLayerIndex].selection);
+                using (Graphics g = Graphics.FromImage(workSpace.Image))
+                    g.DrawRectangle(finished_selection_pen, workLayerList[сurrentLayerIndex].selection);
 
-                Work_space.Refresh();
-                //Layer.AddVisualLayer(ref work_layer_list, ref CurrentLayerIndex, ref Layer_panel, ref Work_space);
-
+                workSpace.Refresh();
             }
 
-            else if (work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Перемещение)
+            else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Move)
             {
-                work_layer_list[CurrentLayerIndex].shift = work_layer_list[CurrentLayerIndex].shift_tmp;
+                workLayerList[сurrentLayerIndex].shift = workLayerList[сurrentLayerIndex].shiftTmp;
             }
-            else if (work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Пипетка) {
-                work_layer_list[CurrentLayerIndex].layer_pen.Color = pipette.BackColor;
+            else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Pipitte) {
+                workLayerList[сurrentLayerIndex].layerPen.Color = pipette.BackColor;
                 choose_color_button.BackColor = pipette.BackColor;
-                work_layer_list[CurrentLayerIndex].Active_instr = (int)instruments.Кисть;
+                workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.BrushDraw;
                 toolTip1.Show("Цвет выбран!", pipette, 1000);
             }
 
         }
 
-        private void Work_space_MouseMove(object sender, MouseEventArgs e)
+        private void MouseMoveWorkSpace(object sender, MouseEventArgs e)
         {
-            if (CurrentLayerIndex < work_layer_list.Count)
+            if (сurrentLayerIndex < workLayerList.Count)
             {
-                Point relative_current_position = new Point((e.Location.X - work_layer_list[CurrentLayerIndex].shift.X) * 100 / work_layer_list[CurrentLayerIndex].scale, (e.Location.Y - work_layer_list[CurrentLayerIndex].shift.Y) * 100 / work_layer_list[CurrentLayerIndex].scale);
-                if (e.Button == System.Windows.Forms.MouseButtons.Left & work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Ластик)
+                Point relative_current_position = new Point((e.Location.X - workLayerList[сurrentLayerIndex].shift.X) * 100 / workLayerList[сurrentLayerIndex].scale, (e.Location.Y - workLayerList[сurrentLayerIndex].shift.Y) * 100 / workLayerList[сurrentLayerIndex].scale);
+                if (e.Button == System.Windows.Forms.MouseButtons.Left & workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Eraser)
                 {
                     for (int i = relative_current_position.X - 5; i < relative_current_position.X + 5; i++)
                     {
                         for (int j = relative_current_position.Y - 5; j < relative_current_position.Y + 5; j++)
                         {
-                            work_layer_list[CurrentLayerIndex].original.SetPixel(i, j, Color.Transparent);
+                            workLayerList[сurrentLayerIndex].original.SetPixel(i, j, Color.Transparent);
                         }
                     }
-                    Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
-                    LayerVisualiser.UpdateLayersPreviews(ref work_layer_list, ref Layer_panel, ref CurrentLayerIndex);
-                    Work_space.Refresh();
+                    workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+                    LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
+                    workSpace.Refresh();
                     return;
                 }
 
-                if (e.Button == System.Windows.Forms.MouseButtons.Left & work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Кисть)
+                if (e.Button == System.Windows.Forms.MouseButtons.Left & workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.BrushDraw)
                 {
                     toolTip1.Hide(pipette);
-                    work_layer_list[CurrentLayerIndex].original = Layer.BrushDraw(ref work_layer_list[CurrentLayerIndex].original, ref work_layer_list[CurrentLayerIndex].layer_pen, ref work_layer_list[CurrentLayerIndex].last_position, ref relative_current_position);
-                    Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
-                    work_layer_list[CurrentLayerIndex].last_position = relative_current_position;
-                    LayerVisualiser.UpdateLayersPreviews(ref work_layer_list, ref Layer_panel, ref CurrentLayerIndex);
-                    Work_space.Refresh();
+                    workLayerList[сurrentLayerIndex].original = Layer.BrushDraw(ref workLayerList[сurrentLayerIndex].original, ref workLayerList[сurrentLayerIndex].layerPen, ref workLayerList[сurrentLayerIndex].lastPosition, ref relative_current_position);
+                    workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+                    workLayerList[сurrentLayerIndex].lastPosition = relative_current_position;
+                    LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
+                    workSpace.Refresh();
                     return;
                 }
 
-                else if ((work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Выделение
-                         | work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Обрезка) & e.Button == System.Windows.Forms.MouseButtons.Left)
+                else if ((workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Select
+                         | workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Cut) & e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
-                    if (work_layer_list[CurrentLayerIndex].original != null)
-                        Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
+                    if (workLayerList[сurrentLayerIndex].original != null)
+                        workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
 
-                    work_layer_list[CurrentLayerIndex].selection = work_layer_list[CurrentLayerIndex].GetSelRectangle(work_layer_list[CurrentLayerIndex].start_position_selection, e.Location);
-                    using (Graphics g = Graphics.FromImage(Work_space.Image))
-                        g.DrawRectangle(work_layer_list[CurrentLayerIndex].selection_pen, work_layer_list[CurrentLayerIndex].selection);
-                    Work_space.Refresh();
-                    LayerVisualiser.UpdateLayersPreviews(ref work_layer_list, ref Layer_panel, ref CurrentLayerIndex);
+                    workLayerList[сurrentLayerIndex].selection = workLayerList[сurrentLayerIndex].GetSelRectangle(workLayerList[сurrentLayerIndex].startPositionSelection, e.Location);
+                    using (Graphics g = Graphics.FromImage(workSpace.Image))
+                        g.DrawRectangle(workLayerList[сurrentLayerIndex].selectionPen, workLayerList[сurrentLayerIndex].selection);
+                    workSpace.Refresh();
+                    LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
                     return;
                 }
 
-                else if (work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Перемещение)
+                else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Move)
                 {
-                    if (e.Button == System.Windows.Forms.MouseButtons.Left & work_layer_list[CurrentLayerIndex].original != null)
+                    if (e.Button == System.Windows.Forms.MouseButtons.Left & workLayerList[сurrentLayerIndex].original != null)
                     {
-                        work_layer_list[CurrentLayerIndex].shift_tmp.X = Cursor.Position.X - work_layer_list[CurrentLayerIndex].start_position.X + work_layer_list[CurrentLayerIndex].shift.X;
-                        work_layer_list[CurrentLayerIndex].shift_tmp.Y = Cursor.Position.Y - work_layer_list[CurrentLayerIndex].start_position.Y + work_layer_list[CurrentLayerIndex].shift.Y;
-                        Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space, true);
+                        workLayerList[сurrentLayerIndex].shiftTmp.X = Cursor.Position.X - workLayerList[сurrentLayerIndex].startPosition.X + workLayerList[сurrentLayerIndex].shift.X;
+                        workLayerList[сurrentLayerIndex].shiftTmp.Y = Cursor.Position.Y - workLayerList[сurrentLayerIndex].startPosition.Y + workLayerList[сurrentLayerIndex].shift.Y;
+                        workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace, true);
 
-                        Work_space.Refresh();
+                        workSpace.Refresh();
 
                         System.GC.Collect();
                         System.GC.WaitForPendingFinalizers();
                     }
                     return;
                 }
-                else if (work_layer_list[CurrentLayerIndex].Active_instr == (int)instruments.Пипетка) {
-                    if (work_layer_list[CurrentLayerIndex].original != null) {
-                       Color cutted_color = ((Bitmap)Work_space.Image).GetPixel(e.Location.X, e.Location.Y);
+                else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Pipitte) {
+                    if (workLayerList[сurrentLayerIndex].original != null) {
+                       Color cutted_color = ((Bitmap)workSpace.Image).GetPixel(e.Location.X, e.Location.Y);
                         pipette.BackColor = cutted_color;
                     }
                     return;
@@ -295,42 +293,53 @@ namespace Project_work
             }
         }
 
-        private void Scale_Scroll(object sender, EventArgs e)
+        private void ScrollScale(object sender, EventArgs e)
         {
             Scale_label.Text = String.Format("{0} %", Scale.Value);
-            work_layer_list[CurrentLayerIndex].scale = Scale.Value + 1;
-            if (work_layer_list[CurrentLayerIndex].original != null)
-                Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
+            workLayerList[сurrentLayerIndex].scale = Scale.Value + 1;
+            if (workLayerList[сurrentLayerIndex].original != null)
+                workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
 
-            Work_space.Refresh();
+            workSpace.Refresh();
             System.GC.Collect();
             System.GC.WaitForPendingFinalizers();
         }
 
-        private void WidthUpDown_ValueChanged(object sender, EventArgs e)
+        private void ChangeValueWidthUpDown(object sender, EventArgs e)
         {
-            this.Work_space.Size = new System.Drawing.Size((int)WidthUpDown.Value, (int)HeightUpDown.Value);
-            Work_space.Refresh();
+            this.workSpace.Size = new System.Drawing.Size((int)WidthUpDown.Value, (int)HeightUpDown.Value);
+            workSpace.Refresh();
         }
 
-        private void HeightUpDown_ValueChanged(object sender, EventArgs e)
+        private void ChangeValueHeightUpDown(object sender, EventArgs e)
         {
-            Work_space.Size = new System.Drawing.Size((int)WidthUpDown.Value, (int)HeightUpDown.Value);
-            Work_space.Refresh();
+            workSpace.Size = new System.Drawing.Size((int)WidthUpDown.Value, (int)HeightUpDown.Value);
+            workSpace.Refresh();
         }
 
-        private void opacity_UpDown_ValueChanged(object sender, EventArgs e)
+        private void ChangeValueOpacityUpDown(object sender, EventArgs e)
         {
-            work_layer_list[CurrentLayerIndex].layer_pen.Width = (float)opacity_UpDown.Value;
+            workLayerList[сurrentLayerIndex].layerPen.Width = (float)opacity_UpDown.Value;
         }
 
-        private void Color_correction_button_Click(object sender, EventArgs e)
+        private void ClickColorCorrectionButton(object sender, EventArgs e)
         {
-            ColorCorrection ColorCorrForm = new ColorCorrection(ref work_layer_list[CurrentLayerIndex].original);
+            ColorCorrection ColorCorrForm = new ColorCorrection(ref workLayerList[сurrentLayerIndex].original);
             ColorCorrForm.ShowDialog();
-            Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
+            workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+            LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
+            workSpace.Refresh();
+            System.GC.Collect();
+            System.GC.WaitForPendingFinalizers();
+        }
 
-            Work_space.Refresh();
+        private void ClickColorBalanceButton(object sender, EventArgs e)
+        {
+            ColorBalancing ColorBalForm = new ColorBalancing(ref workLayerList[сurrentLayerIndex].original);
+            ColorBalForm.ShowDialog();
+            workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+            LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
+            workSpace.Refresh();
             System.GC.Collect();
             System.GC.WaitForPendingFinalizers();
         }

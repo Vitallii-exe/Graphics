@@ -15,30 +15,30 @@ namespace Project_work
 {
     public partial class ColorCorrection : Form
     {
-        Bitmap original_to_correct;
+        Bitmap originalToCorrect;
         //Bitmap final_corrected;
 
         public ColorCorrection(ref Bitmap original)
         {
             InitializeComponent();
-            original_to_correct = original;
-            preview.BackgroundImage = original_to_correct;
-            StartPosition = FormStartPosition.CenterScreen;
+            originalToCorrect = original;
+            preview.BackgroundImage = originalToCorrect;
+            this.StartPosition = FormStartPosition.CenterScreen;
 
         }
 
         private void Apply_Click(object sender, EventArgs e)
         {
             SaturationCorrection sat_filter = new SaturationCorrection((float)SatScale.Value / 100);
-            sat_filter.ApplyInPlace(original_to_correct);
+            sat_filter.ApplyInPlace(originalToCorrect);
             BrightnessCorrection br_filter = new BrightnessCorrection(BrScale.Value);
-            br_filter.ApplyInPlace(original_to_correct);
+            br_filter.ApplyInPlace(originalToCorrect);
             Close();
         }
 
-        private void _Scroll(object sender, EventArgs e)
+        private void Scroll(object sender, EventArgs e)
         {
-            Bitmap now_corr = new Bitmap(original_to_correct);
+            Bitmap now_corr = new Bitmap(originalToCorrect);
             SaturationCorrection sat_filter = new SaturationCorrection((float)SatScale.Value / 100);
             sat_filter.ApplyInPlace(now_corr);
             BrightnessCorrection br_filter = new BrightnessCorrection(BrScale.Value);
@@ -53,7 +53,7 @@ namespace Project_work
         {
             SatScale.Value = 0;
             BrScale.Value = 0;
-            preview.BackgroundImage = original_to_correct;
+            preview.BackgroundImage = originalToCorrect;
             preview.Refresh();
         }
     }

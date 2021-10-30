@@ -7,40 +7,40 @@ public class Layer
 {
     public Bitmap original = new Bitmap(675, 504);
     public Button preview = new Button();
-    public CheckBox visible_checkbox = new CheckBox();
-    public Label label_caption = new Label();
-    public bool visible = true;
+    public CheckBox isVisibleCheckbox = new CheckBox();
+    public Label labelCaption = new Label();
+    public bool isVisible = true;
 
-    public int Active_instr = 0;
-    public int Current_state = -1;
+    public int activeInstrument = 0;
+    public int currentState = -1;
 
-    public Pen layer_pen = new Pen(Brushes.Black, 10.0f) { StartCap = System.Drawing.Drawing2D.LineCap.Round, EndCap = System.Drawing.Drawing2D.LineCap.Round };
-    public Pen selection_pen = new Pen(Brushes.Black, 2) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash};
+    public Pen layerPen = new Pen(Brushes.Black, 10.0f) { StartCap = System.Drawing.Drawing2D.LineCap.Round, EndCap = System.Drawing.Drawing2D.LineCap.Round };
+    public Pen selectionPen = new Pen(Brushes.Black, 2) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash};
 
-    public Point start_position = new Point(0, 0);
-    public Point start_position_selection = new Point(0, 0);
+    public Point startPosition = new Point(0, 0);
+    public Point startPositionSelection = new Point(0, 0);
     public Point shift = new Point(0, 0);
-    public Point shift_tmp = new Point(0, 0);
-    public Point last_position = new Point(0, 0);
+    public Point shiftTmp = new Point(0, 0);
+    public Point lastPosition = new Point(0, 0);
 
     public Rectangle selection = new Rectangle(0, 0, 0, 0);
     public int scale = 100;
 
-    public Layer(int num) {
-        Point now_locate_preview = new Point(20, num * 60);
-        Point now_locate_checkbox = new Point(5, num * 60 + 15);
-        Point now_locate_caption = new Point(120, num * 60 + 15);
-        preview.Location = now_locate_preview;
-        preview.Size = new Size(80, 50);
-        preview.Visible = true;
-        preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+    public Layer() {
+        //Point now_locate_preview = new Point(20, num * 60);
+        //Point now_locate_checkbox = new Point(5, num * 60 + 15);
+        //Point now_locate_caption = new Point(120, num * 60 + 15);
+        //preview.Location = now_locate_preview;
+        //preview.Size = new Size(80, 50);
+        //preview.Visible = true;
+        //preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 
-        visible_checkbox.Location = now_locate_checkbox;
-        visible_checkbox.Checked = true;
+        //isVisibleCheckbox.Location = now_locate_checkbox;
+        //isVisibleCheckbox.Checked = true;
 
-        label_caption.Location = now_locate_caption;
-        label_caption.Visible = true;
-        label_caption.Text = "Слой " + num.ToString();
+        //labelCaption.Location = now_locate_caption;
+        //labelCaption.Visible = true;
+        //labelCaption.Text = "Слой " + num.ToString();
 
 
     }
@@ -114,7 +114,7 @@ public class Layer
         {
             for (int i = 0; i < _work_layer_list.Count; i++)
             {
-                if (_work_layer_list[i].visible)
+                if (_work_layer_list[i].isVisible)
                 {
                     Bitmap to_draw = null;
                     if (!tmp)
@@ -129,7 +129,7 @@ public class Layer
                         to_draw = _work_layer_list[i].ResizeBitmap(_work_layer_list[i].original, Work_space.Width, Work_space.Height,
                                                                _work_layer_list[i].original.Width * _work_layer_list[i].scale / 100,
                                                                _work_layer_list[i].original.Height * _work_layer_list[i].scale / 100,
-                                                               _work_layer_list[i].shift_tmp.X, _work_layer_list[i].shift_tmp.Y);
+                                                               _work_layer_list[i].shiftTmp.X, _work_layer_list[i].shiftTmp.Y);
                     }
 
                     g.DrawImage(to_draw, 0, 0, to_draw.Width, to_draw.Height);

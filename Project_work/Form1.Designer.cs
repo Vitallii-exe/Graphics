@@ -30,7 +30,7 @@ namespace Project_work
             this.brush = new System.Windows.Forms.Button();
             this.pipette = new System.Windows.Forms.Button();
             this.Apply_button = new System.Windows.Forms.Button();
-            this.Work_space = new System.Windows.Forms.PictureBox();
+            this.workSpace = new System.Windows.Forms.PictureBox();
             this.contextPicBox = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.вырезатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.копироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +83,7 @@ namespace Project_work
             this.LayerUpButton = new System.Windows.Forms.Button();
             this.Choose_color = new System.Windows.Forms.ColorDialog();
             this.Layer_panel = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.Work_space)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.workSpace)).BeginInit();
             this.contextPicBox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Scale)).BeginInit();
@@ -110,7 +110,7 @@ namespace Project_work
             this.toolTip1.SetToolTip(this.cropping, "Инструмент \"Обрезка\". Выделяет прямоугольную область и удаляет всё, что выходит з" +
         "а её пределы.");
             this.cropping.UseVisualStyleBackColor = false;
-            this.cropping.Click += new System.EventHandler(this.cropping_Click);
+            this.cropping.Click += new System.EventHandler(this.CroppingClick);
             // 
             // create_area
             // 
@@ -127,7 +127,7 @@ namespace Project_work
             this.create_area.TabIndex = 1;
             this.toolTip1.SetToolTip(this.create_area, "Инструмент \"Выделение\". Позволяет выделить прямоугольную область на экране.");
             this.create_area.UseVisualStyleBackColor = false;
-            this.create_area.Click += new System.EventHandler(this.create_area_Click);
+            this.create_area.Click += new System.EventHandler(this.CreateAreaClick);
             // 
             // moving_instr
             // 
@@ -146,7 +146,7 @@ namespace Project_work
             this.toolTip1.SetToolTip(this.moving_instr, "Инструмент \"Перемещение\". Позволяет смещать изображение.\r\nПри смещении изображени" +
         "я за границы рабочего поля оно не обрезается и не искажается.");
             this.moving_instr.UseVisualStyleBackColor = false;
-            this.moving_instr.Click += new System.EventHandler(this.moving_instr_Click);
+            this.moving_instr.Click += new System.EventHandler(this.MovingInstrClick);
             // 
             // brush
             // 
@@ -163,7 +163,7 @@ namespace Project_work
             this.brush.TabIndex = 3;
             this.toolTip1.SetToolTip(this.brush, "Инструмент \"Кисть\". Позволяет нарисовать линию заданной толщины и цвета.");
             this.brush.UseVisualStyleBackColor = false;
-            this.brush.Click += new System.EventHandler(this.brush_Click);
+            this.brush.Click += new System.EventHandler(this.BrushClick);
             // 
             // pipette
             // 
@@ -181,7 +181,7 @@ namespace Project_work
             this.toolTip1.SetToolTip(this.pipette, "Инструмент \"Пипетка\". Позволяет выбрать нужный цвет с изображения. \r\nДля удобства" +
         " кнопка подсвечивается тем цветом, над которым сейчас находится курсор.");
             this.pipette.UseVisualStyleBackColor = false;
-            this.pipette.Click += new System.EventHandler(this.pipette_Click);
+            this.pipette.Click += new System.EventHandler(this.ClickPipette);
             // 
             // Apply_button
             // 
@@ -199,22 +199,22 @@ namespace Project_work
             this.toolTip1.SetToolTip(this.Apply_button, "Инструмент \"Подтвердить\". Выполняет подтверждение внесенных изменений на изображе" +
         "нии.");
             this.Apply_button.UseVisualStyleBackColor = false;
-            this.Apply_button.Click += new System.EventHandler(this.Apply_button_Click);
+            this.Apply_button.Click += new System.EventHandler(this.ClickApplyButton);
             // 
-            // Work_space
+            // workSpace
             // 
-            this.Work_space.BackColor = System.Drawing.Color.Black;
-            this.Work_space.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Work_space.BackgroundImage")));
-            this.Work_space.ContextMenuStrip = this.contextPicBox;
-            this.Work_space.Cursor = System.Windows.Forms.Cursors.Default;
-            this.Work_space.Location = new System.Drawing.Point(0, 0);
-            this.Work_space.Name = "Work_space";
-            this.Work_space.Size = new System.Drawing.Size(675, 504);
-            this.Work_space.TabIndex = 6;
-            this.Work_space.TabStop = false;
-            this.Work_space.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Work_space_MouseDown);
-            this.Work_space.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Work_space_MouseMove);
-            this.Work_space.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Work_space_MouseUp);
+            this.workSpace.BackColor = System.Drawing.Color.Black;
+            this.workSpace.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("workSpace.BackgroundImage")));
+            this.workSpace.ContextMenuStrip = this.contextPicBox;
+            this.workSpace.Cursor = System.Windows.Forms.Cursors.Default;
+            this.workSpace.Location = new System.Drawing.Point(0, 0);
+            this.workSpace.Name = "workSpace";
+            this.workSpace.Size = new System.Drawing.Size(675, 504);
+            this.workSpace.TabIndex = 6;
+            this.workSpace.TabStop = false;
+            this.workSpace.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseDownWorkSpace);
+            this.workSpace.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseMoveWorkSpace);
+            this.workSpace.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MouseUpWorkSpace);
             // 
             // contextPicBox
             // 
@@ -292,14 +292,14 @@ namespace Project_work
             this.Open_from_file.Name = "Open_from_file";
             this.Open_from_file.Size = new System.Drawing.Size(201, 26);
             this.Open_from_file.Text = "Открыть";
-            this.Open_from_file.Click += new System.EventHandler(this.открытьToolStripMenuItem_Click);
+            this.Open_from_file.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // сохранитьToolStripMenuItem
             // 
             this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
             this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
             this.сохранитьToolStripMenuItem.Text = "Сохранить";
-            this.сохранитьToolStripMenuItem.Click += new System.EventHandler(this.сохранитьToolStripMenuItem_Click);
+            this.сохранитьToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // сохранитьКакToolStripMenuItem
             // 
@@ -432,7 +432,7 @@ namespace Project_work
             this.Scale.TabIndex = 8;
             this.Scale.TickStyle = System.Windows.Forms.TickStyle.None;
             this.Scale.Value = 100;
-            this.Scale.Scroll += new System.EventHandler(this.Scale_Scroll);
+            this.Scale.Scroll += new System.EventHandler(this.ScrollScale);
             // 
             // Scale_label
             // 
@@ -481,7 +481,7 @@ namespace Project_work
             this.choose_color_button.Size = new System.Drawing.Size(130, 20);
             this.choose_color_button.TabIndex = 15;
             this.choose_color_button.UseVisualStyleBackColor = false;
-            this.choose_color_button.Click += new System.EventHandler(this.choose_color_button_Click);
+            this.choose_color_button.Click += new System.EventHandler(this.ClickChooseColorButton);
             // 
             // current_color_label
             // 
@@ -514,7 +514,7 @@ namespace Project_work
             0,
             0,
             0});
-            this.opacity_UpDown.ValueChanged += new System.EventHandler(this.opacity_UpDown_ValueChanged);
+            this.opacity_UpDown.ValueChanged += new System.EventHandler(this.ChangeValueOpacityUpDown);
             // 
             // brush_width_label
             // 
@@ -557,7 +557,7 @@ namespace Project_work
             0,
             0,
             0});
-            this.HeightUpDown.ValueChanged += new System.EventHandler(this.HeightUpDown_ValueChanged);
+            this.HeightUpDown.ValueChanged += new System.EventHandler(this.ChangeValueHeightUpDown);
             // 
             // label3
             // 
@@ -609,7 +609,7 @@ namespace Project_work
             0,
             0,
             0});
-            this.WidthUpDown.ValueChanged += new System.EventHandler(this.WidthUpDown_ValueChanged);
+            this.WidthUpDown.ValueChanged += new System.EventHandler(this.ChangeValueWidthUpDown);
             // 
             // scale_changing_label
             // 
@@ -628,7 +628,7 @@ namespace Project_work
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.AutoScroll = true;
-            this.panel2.Controls.Add(this.Work_space);
+            this.panel2.Controls.Add(this.workSpace);
             this.panel2.Location = new System.Drawing.Point(48, 41);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(676, 508);
@@ -660,7 +660,7 @@ namespace Project_work
             this.toolTip1.SetToolTip(this.Eraser_button, "Инструмент \"Ластик\". При наведении стирает пиксели изображения, делая их прозрачн" +
         "ыми.");
             this.Eraser_button.UseVisualStyleBackColor = false;
-            this.Eraser_button.Click += new System.EventHandler(this.Eraser_button_Click);
+            this.Eraser_button.Click += new System.EventHandler(this.EraserButtonClick);
             // 
             // Color_correction_button
             // 
@@ -675,10 +675,10 @@ namespace Project_work
             this.Color_correction_button.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Color_correction_button.Size = new System.Drawing.Size(30, 30);
             this.Color_correction_button.TabIndex = 20;
-            this.toolTip1.SetToolTip(this.Color_correction_button, "Инструмент \"Ластик\". При наведении стирает пиксели изображения, делая их прозрачн" +
-        "ыми.");
+            this.toolTip1.SetToolTip(this.Color_correction_button, "Инструмент \"Цветокоррекция\". Позволяет изменять яркость и насыщенность выбранного" +
+        " слоя.");
             this.Color_correction_button.UseVisualStyleBackColor = false;
-            this.Color_correction_button.Click += new System.EventHandler(this.Color_correction_button_Click);
+            this.Color_correction_button.Click += new System.EventHandler(this.ClickColorCorrectionButton);
             // 
             // Color_balance_button
             // 
@@ -693,9 +693,9 @@ namespace Project_work
             this.Color_balance_button.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Color_balance_button.Size = new System.Drawing.Size(30, 30);
             this.Color_balance_button.TabIndex = 21;
-            this.toolTip1.SetToolTip(this.Color_balance_button, "Инструмент \"Ластик\". При наведении стирает пиксели изображения, делая их прозрачн" +
-        "ыми.");
+            this.toolTip1.SetToolTip(this.Color_balance_button, "Инструмент \"Цветовой баланс\".");
             this.Color_balance_button.UseVisualStyleBackColor = false;
+            this.Color_balance_button.Click += new System.EventHandler(this.ClickColorBalanceButton);
             // 
             // LayerAddButton
             // 
@@ -711,8 +711,7 @@ namespace Project_work
             this.LayerAddButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.LayerAddButton.Size = new System.Drawing.Size(20, 16);
             this.LayerAddButton.TabIndex = 23;
-            this.toolTip1.SetToolTip(this.LayerAddButton, "Инструмент \"Подтвердить\". Выполняет подтверждение внесенных изменений на изображе" +
-        "нии.");
+            this.toolTip1.SetToolTip(this.LayerAddButton, "Создать новый слой");
             this.LayerAddButton.UseVisualStyleBackColor = false;
             // 
             // LayerDeleteButton
@@ -729,8 +728,7 @@ namespace Project_work
             this.LayerDeleteButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.LayerDeleteButton.Size = new System.Drawing.Size(17, 16);
             this.LayerDeleteButton.TabIndex = 24;
-            this.toolTip1.SetToolTip(this.LayerDeleteButton, "Инструмент \"Подтвердить\". Выполняет подтверждение внесенных изменений на изображе" +
-        "нии.");
+            this.toolTip1.SetToolTip(this.LayerDeleteButton, "Удалить выбранный слой");
             this.LayerDeleteButton.UseVisualStyleBackColor = false;
             // 
             // LayerDownButton
@@ -747,10 +745,9 @@ namespace Project_work
             this.LayerDownButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.LayerDownButton.Size = new System.Drawing.Size(20, 16);
             this.LayerDownButton.TabIndex = 25;
-            this.toolTip1.SetToolTip(this.LayerDownButton, "Инструмент \"Подтвердить\". Выполняет подтверждение внесенных изменений на изображе" +
-        "нии.");
+            this.toolTip1.SetToolTip(this.LayerDownButton, "Переместить слой ниже");
             this.LayerDownButton.UseVisualStyleBackColor = false;
-            this.LayerDownButton.Click += new System.EventHandler(this.LayerDownButton_Click);
+            this.LayerDownButton.Click += new System.EventHandler(this.ClickLayerButtonDown);
             // 
             // LayerUpButton
             // 
@@ -766,10 +763,9 @@ namespace Project_work
             this.LayerUpButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.LayerUpButton.Size = new System.Drawing.Size(20, 16);
             this.LayerUpButton.TabIndex = 26;
-            this.toolTip1.SetToolTip(this.LayerUpButton, "Инструмент \"Подтвердить\". Выполняет подтверждение внесенных изменений на изображе" +
-        "нии.");
+            this.toolTip1.SetToolTip(this.LayerUpButton, "Переместить слой выше");
             this.LayerUpButton.UseVisualStyleBackColor = false;
-            this.LayerUpButton.Click += new System.EventHandler(this.LayerUpButton_Click);
+            this.LayerUpButton.Click += new System.EventHandler(this.ClickLayerButtonUp);
             // 
             // Layer_panel
             // 
@@ -815,7 +811,7 @@ namespace Project_work
             this.Name = "Form1";
             this.ShowIcon = false;
             this.Text = "Graphics Editor";
-            ((System.ComponentModel.ISupportInitialize)(this.Work_space)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.workSpace)).EndInit();
             this.contextPicBox.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -837,7 +833,7 @@ namespace Project_work
         private System.Windows.Forms.Button brush;
         private System.Windows.Forms.Button pipette;
         private System.Windows.Forms.Button Apply_button;
-        private System.Windows.Forms.PictureBox Work_space;
+        private System.Windows.Forms.PictureBox workSpace;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem редактированиеToolStripMenuItem;

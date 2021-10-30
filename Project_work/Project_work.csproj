@@ -77,6 +77,12 @@
     <Compile Include="ColorCorrection.Designer.cs">
       <DependentUpon>ColorCorrection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Color_Balancing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Color_Balancing.Designer.cs">
+      <DependentUpon>Color_Balancing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Import_Export.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -95,6 +101,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ColorCorrection.resx">
       <DependentUpon>ColorCorrection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Color_Balancing.resx">
+      <DependentUpon>Color_Balancing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
