@@ -71,26 +71,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clickers.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ColorCorrection.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ColorCorrection.Designer.cs">
       <DependentUpon>ColorCorrection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Color_Balancing.cs">
+    <Compile Include="ColorBalancing.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Color_Balancing.Designer.cs">
-      <DependentUpon>Color_Balancing.cs</DependentUpon>
+    <Compile Include="ColorBalancing.Designer.cs">
+      <DependentUpon>ColorBalancing.cs</DependentUpon>
     </Compile>
     <Compile Include="Import_Export.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Layer.cs" />
+    <Compile Include="LayerButtonClickers.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="LayerVisualiser.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -102,11 +108,11 @@
     <EmbeddedResource Include="ColorCorrection.resx">
       <DependentUpon>ColorCorrection.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Color_Balancing.resx">
-      <DependentUpon>Color_Balancing.cs</DependentUpon>
+    <EmbeddedResource Include="ColorBalancing.resx">
+      <DependentUpon>ColorBalancing.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

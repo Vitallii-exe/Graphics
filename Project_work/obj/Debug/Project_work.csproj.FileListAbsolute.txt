@@ -9,7 +9,6 @@ C:\Users\Виталий\source\repos\Project_work\Project_work\obj\Debug\Project
 C:\Users\Виталий\source\repos\Project_work\Project_work\obj\Debug\Project_work.exe
 C:\Users\Виталий\source\repos\Project_work\Project_work\obj\Debug\Project_work.pdb
 C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.csproj.AssemblyReference.cache
-C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.Form1.resources
 C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.Properties.Resources.resources
 C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.csproj.GenerateResource.cache
 C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.csproj.CoreCompileInputs.cache
@@ -27,3 +26,4 @@ C:\Users\Виталий\source\repos\NewProject_work\Project_work\bin\Debug\AFor
 C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.csproj.CopyComplete
 C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.ColorCorrection.resources
 C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.ColorBalancing.resources
+C:\Users\Виталий\source\repos\NewProject_work\Project_work\obj\Debug\Project_work.MainForm.resources

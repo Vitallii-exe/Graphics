@@ -26,31 +26,13 @@ public class Layer
     public Rectangle selection = new Rectangle(0, 0, 0, 0);
     public int scale = 100;
 
-    public Layer() {
-        //Point now_locate_preview = new Point(20, num * 60);
-        //Point now_locate_checkbox = new Point(5, num * 60 + 15);
-        //Point now_locate_caption = new Point(120, num * 60 + 15);
-        //preview.Location = now_locate_preview;
-        //preview.Size = new Size(80, 50);
-        //preview.Visible = true;
-        //preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-
-        //isVisibleCheckbox.Location = now_locate_checkbox;
-        //isVisibleCheckbox.Checked = true;
-
-        //labelCaption.Location = now_locate_caption;
-        //labelCaption.Visible = true;
-        //labelCaption.Text = "Слой " + num.ToString();
-
-
-    }
-    public Bitmap ResizeBitmap(Bitmap source_bitmap, int PicBoxWidth, int PicBoxHeight, int width, int height, int shift_X = 0, int shift_Y = 0)
+    public Bitmap ResizeBitmap(Bitmap sourceBitmap, int picBoxWidth, int PicBoxHeight, int width, int height, int shiftX = 0, int shiftY = 0)
     {
         // Изменяет размер Bitmapa, а также сдвигает его на заданное число пикселей
-        Bitmap result = new Bitmap(PicBoxWidth, PicBoxHeight);
+        Bitmap result = new Bitmap(picBoxWidth, PicBoxHeight);
         using (Graphics g = Graphics.FromImage(result))
         {
-            g.DrawImage(source_bitmap, shift_X, shift_Y, width, height);
+            g.DrawImage(sourceBitmap, shiftX, shiftY, width, height);
         }
         return result;
     }
@@ -107,29 +89,29 @@ public class Layer
         return source;
     }
 
-    public static Bitmap DrawLayersList(ref List<Layer> _work_layer_list, ref PictureBox Work_space, bool tmp = false)
+    public static Bitmap DrawLayersList(ref List<Layer> workLayerList, ref PictureBox workSpace, bool tmp = false)
     {
-        Bitmap result = new Bitmap(Work_space.Width, Work_space.Height);
+        Bitmap result = new Bitmap(workSpace.Width, workSpace.Height);
         using (Graphics g = Graphics.FromImage(result))
         {
-            for (int i = 0; i < _work_layer_list.Count; i++)
+            for (int i = 0; i < workLayerList.Count; i++)
             {
-                if (_work_layer_list[i].isVisible)
+                if (workLayerList[i].isVisible)
                 {
                     Bitmap to_draw = null;
                     if (!tmp)
                     {
-                        to_draw = _work_layer_list[i].ResizeBitmap(_work_layer_list[i].original, Work_space.Width, Work_space.Height,
-                                                               _work_layer_list[i].original.Width * _work_layer_list[i].scale / 100,
-                                                               _work_layer_list[i].original.Height * _work_layer_list[i].scale / 100,
-                                                               _work_layer_list[i].shift.X, _work_layer_list[i].shift.Y);
+                        to_draw = workLayerList[i].ResizeBitmap(workLayerList[i].original, workSpace.Width, workSpace.Height,
+                                                               workLayerList[i].original.Width * workLayerList[i].scale / 100,
+                                                               workLayerList[i].original.Height * workLayerList[i].scale / 100,
+                                                               workLayerList[i].shift.X, workLayerList[i].shift.Y);
                     }
                     else
                     {
-                        to_draw = _work_layer_list[i].ResizeBitmap(_work_layer_list[i].original, Work_space.Width, Work_space.Height,
-                                                               _work_layer_list[i].original.Width * _work_layer_list[i].scale / 100,
-                                                               _work_layer_list[i].original.Height * _work_layer_list[i].scale / 100,
-                                                               _work_layer_list[i].shiftTmp.X, _work_layer_list[i].shiftTmp.Y);
+                        to_draw = workLayerList[i].ResizeBitmap(workLayerList[i].original, workSpace.Width, workSpace.Height,
+                                                               workLayerList[i].original.Width * workLayerList[i].scale / 100,
+                                                               workLayerList[i].original.Height * workLayerList[i].scale / 100,
+                                                               workLayerList[i].shiftTmp.X, workLayerList[i].shiftTmp.Y);
                     }
 
                     g.DrawImage(to_draw, 0, 0, to_draw.Width, to_draw.Height);
