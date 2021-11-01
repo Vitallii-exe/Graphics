@@ -15,6 +15,7 @@ public class Layer
     public int currentState = -1;
 
     public Pen layerPen = new Pen(Brushes.Black, 10.0f) { StartCap = System.Drawing.Drawing2D.LineCap.Round, EndCap = System.Drawing.Drawing2D.LineCap.Round };
+    public Pen eraserPen = new Pen(Brushes.Transparent, 10.0f) { StartCap = System.Drawing.Drawing2D.LineCap.Round, EndCap = System.Drawing.Drawing2D.LineCap.Round };
     public Pen selectionPen = new Pen(Brushes.Black, 2) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash};
 
     public Point startPosition = new Point(0, 0);
@@ -79,11 +80,12 @@ public class Layer
         else return selected_square;
     }
 
-    public static Bitmap BrushDraw(ref Bitmap source, ref Pen brush_pen, ref Point start_point, ref Point finish_point) 
+    public static Bitmap BrushDraw(ref Bitmap source, ref Pen brush_pen, ref Point start_point, ref Point finish_point, bool Erase=false) 
     {
         // Рисует brush_pen'ом линию по 2-м точкам
         using (Graphics g = Graphics.FromImage(source))
         {
+            if (Erase) g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
             g.DrawLine(brush_pen, start_point.X, start_point.Y, finish_point.X, finish_point.Y);
         }
         return source;

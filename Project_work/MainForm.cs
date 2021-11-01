@@ -53,7 +53,8 @@ namespace Project_work
             }
 
 
-            else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.BrushDraw)
+            else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.BrushDraw 
+                    | workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Eraser)
             {
                 workLayerList[сurrentLayerIndex].lastPosition = relative_current_position;
                 return;
@@ -110,27 +111,22 @@ namespace Project_work
             if (сurrentLayerIndex < workLayerList.Count)
             {
                 Point relativeCurrentPosition = new Point((e.Location.X - workLayerList[сurrentLayerIndex].shift.X) * 100 / workLayerList[сurrentLayerIndex].scale, (e.Location.Y - workLayerList[сurrentLayerIndex].shift.Y) * 100 / workLayerList[сurrentLayerIndex].scale);
-                if (e.Button == System.Windows.Forms.MouseButtons.Left & workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Eraser)
-                {
-                    for (int i = relativeCurrentPosition.X - 5; i < relativeCurrentPosition.X + 5; i++)
-                    {
-                        for (int j = relativeCurrentPosition.Y - 5; j < relativeCurrentPosition.Y + 5; j++)
-                        {
-                            workLayerList[сurrentLayerIndex].original.SetPixel(i, j, Color.Transparent);
-                        }
-                    }
-                    workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
-                    LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
-                    workSpace.Refresh();
-                    return;
-                }
 
-                if (e.Button == System.Windows.Forms.MouseButtons.Left & workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.BrushDraw)
+                if (e.Button == System.Windows.Forms.MouseButtons.Left & (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.BrushDraw
+                    | workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Eraser))
                 {
                     toolTip1.Hide(pipette);
-                    workLayerList[сurrentLayerIndex].original = Layer.BrushDraw(ref workLayerList[сurrentLayerIndex].original, ref workLayerList[сurrentLayerIndex].layerPen, ref workLayerList[сurrentLayerIndex].lastPosition, ref relativeCurrentPosition);
-                    workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+                    if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Eraser)
+                    {
+                        workLayerList[сurrentLayerIndex].original = Layer.BrushDraw(ref workLayerList[сurrentLayerIndex].original, ref workLayerList[сurrentLayerIndex].eraserPen, ref workLayerList[сurrentLayerIndex].lastPosition, ref relativeCurrentPosition, true);
+                    }
+
+                    else
+                    {
+                        workLayerList[сurrentLayerIndex].original = Layer.BrushDraw(ref workLayerList[сurrentLayerIndex].original, ref workLayerList[сurrentLayerIndex].layerPen, ref workLayerList[сurrentLayerIndex].lastPosition, ref relativeCurrentPosition);
+                    }
                     workLayerList[сurrentLayerIndex].lastPosition = relativeCurrentPosition;
+                    workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
                     LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
                     workSpace.Refresh();
                     return;
@@ -203,6 +199,7 @@ namespace Project_work
         private void ChangeValueOpacityUpDown(object sender, EventArgs e)
         {
             workLayerList[сurrentLayerIndex].layerPen.Width = (float)opacity_UpDown.Value;
+            workLayerList[сurrentLayerIndex].eraserPen.Width = (float)opacity_UpDown.Value;
         }
     }
 }
