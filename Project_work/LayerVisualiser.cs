@@ -18,7 +18,7 @@ namespace Project_work
                 int reversedNumber = workLayerList.Count - i - 1;
                 workLayerList[i].preview.Size = new Size(80, 50);
                 workLayerList[i].preview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-                workLayerList[i].isVisibleCheckbox.Checked = true;
+                workLayerList[i].isVisibleCheckbox.Checked = workLayerList[i].isVisible;
 
                 workLayerList[i].preview.Location = new Point(20, reversedNumber * 60);
                 workLayerList[i].isVisibleCheckbox.Location = new Point(5, reversedNumber * 60 + 15);

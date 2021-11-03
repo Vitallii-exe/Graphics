@@ -9,7 +9,7 @@ namespace Project_work
         public Import_Export() {
         
         }
-        public static void ImportFromFile(ref List <Layer> work_layer_list, ref PictureBox Work_space) {
+        public static void ImportFromFile(ref List <Layer> workLayerList, ref PictureBox workSpace) {
             OpenFileDialog FD = new OpenFileDialog();
             FD.Filter = "Image Files(*.BMP;*.JPG;*.PNG;*.ICO)|*.BMP;*.JPG;*.PNG;*.ICO|All files(*.*)|*.*";
 
@@ -17,7 +17,7 @@ namespace Project_work
             {
                 try
                 {
-                    Layer fromfilelayer = new Layer();
+                    Layer layerFromFile = new Layer();
                     Bitmap orig = new Bitmap(FD.FileName);
                     Bitmap clone = new Bitmap(orig.Width, orig.Height,
                                               System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -26,11 +26,11 @@ namespace Project_work
                     {
                         gr.DrawImage(orig, new Rectangle(0, 0, clone.Width, clone.Height));
                     }
-                    Work_space.Image = clone;
-                    fromfilelayer.original = clone;
-                    work_layer_list.Add(fromfilelayer);
-                    Work_space.Image = Layer.DrawLayersList(ref work_layer_list, ref Work_space);
-                    Work_space.Refresh();
+                    workSpace.Image = clone;
+                    layerFromFile.original = clone;
+                    workLayerList.Add(layerFromFile);
+                    workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+                    workSpace.Refresh();
                 }
                 catch
                 {

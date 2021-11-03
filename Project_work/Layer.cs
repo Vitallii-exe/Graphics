@@ -14,7 +14,7 @@ public class Layer
     public int activeInstrument = 0;
     public int currentState = -1;
 
-    public Pen layerPen = new Pen(Brushes.Black, 10.0f) { StartCap = System.Drawing.Drawing2D.LineCap.Round, EndCap = System.Drawing.Drawing2D.LineCap.Round };
+    public Pen layerPen = new Pen(Color.FromArgb(255, Color.Black), 10.0f) { StartCap = System.Drawing.Drawing2D.LineCap.Round, EndCap = System.Drawing.Drawing2D.LineCap.Round };
     public Pen eraserPen = new Pen(Brushes.Transparent, 10.0f) { StartCap = System.Drawing.Drawing2D.LineCap.Round, EndCap = System.Drawing.Drawing2D.LineCap.Round };
     public Pen selectionPen = new Pen(Brushes.Black, 2) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash};
 

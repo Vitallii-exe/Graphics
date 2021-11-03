@@ -22,7 +22,6 @@ namespace Project_work
         }
         private void InitializeComponent()
         {
-            //Clickers chooseInstrument = new Clickers();
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.cropping = new System.Windows.Forms.Button();
@@ -60,9 +59,11 @@ namespace Project_work
             this.видToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.помощьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Scale = new System.Windows.Forms.TrackBar();
-            this.Scale_label = new System.Windows.Forms.Label();
+            this.scaleLabel = new System.Windows.Forms.Label();
             this.Prop_panel = new System.Windows.Forms.Panel();
-            this.choose_color_button = new System.Windows.Forms.Button();
+            this.TransparencyUpDown = new System.Windows.Forms.NumericUpDown();
+            this.TransparencyLabel = new System.Windows.Forms.Label();
+            this.colorButtonChoose = new System.Windows.Forms.Button();
             this.current_color_label = new System.Windows.Forms.Label();
             this.opacity_UpDown = new System.Windows.Forms.NumericUpDown();
             this.brush_width_label = new System.Windows.Forms.Label();
@@ -82,13 +83,14 @@ namespace Project_work
             this.LayerDeleteButton = new System.Windows.Forms.Button();
             this.LayerDownButton = new System.Windows.Forms.Button();
             this.LayerUpButton = new System.Windows.Forms.Button();
-            this.Choose_color = new System.Windows.Forms.ColorDialog();
-            this.Layer_panel = new System.Windows.Forms.Panel();
+            this.colorChoose = new System.Windows.Forms.ColorDialog();
+            this.layerPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.workSpace)).BeginInit();
             this.contextPicBox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Scale)).BeginInit();
             this.Prop_panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TransparencyUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.opacity_UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HeightUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WidthUpDown)).BeginInit();
@@ -355,21 +357,21 @@ namespace Project_work
             // кистьToolStripMenuItem
             // 
             this.кистьToolStripMenuItem.Name = "кистьToolStripMenuItem";
-            this.кистьToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.кистьToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
             this.кистьToolStripMenuItem.Text = "Кисть";
             this.кистьToolStripMenuItem.Click += new System.EventHandler(this.BrushClick);
             // 
             // ластикToolStripMenuItem
             // 
             this.ластикToolStripMenuItem.Name = "ластикToolStripMenuItem";
-            this.ластикToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.ластикToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
             this.ластикToolStripMenuItem.Text = "Ластик";
             this.ластикToolStripMenuItem.Click += new System.EventHandler(this.EraserButtonClick);
             // 
             // пипеткаToolStripMenuItem
             // 
             this.пипеткаToolStripMenuItem.Name = "пипеткаToolStripMenuItem";
-            this.пипеткаToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.пипеткаToolStripMenuItem.Size = new System.Drawing.Size(150, 26);
             this.пипеткаToolStripMenuItem.Text = "Пипетка";
             this.пипеткаToolStripMenuItem.Click += new System.EventHandler(this.ClickPipette);
             // 
@@ -394,14 +396,14 @@ namespace Project_work
             // насыщенностьToolStripMenuItem
             // 
             this.насыщенностьToolStripMenuItem.Name = "насыщенностьToolStripMenuItem";
-            this.насыщенностьToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.насыщенностьToolStripMenuItem.Size = new System.Drawing.Size(213, 26);
             this.насыщенностьToolStripMenuItem.Text = "Насыщенность";
             this.насыщенностьToolStripMenuItem.Click += new System.EventHandler(this.ClickColorCorrectionButton);
             // 
             // яркостьToolStripMenuItem
             // 
             this.яркостьToolStripMenuItem.Name = "яркостьToolStripMenuItem";
-            this.яркостьToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.яркостьToolStripMenuItem.Size = new System.Drawing.Size(213, 26);
             this.яркостьToolStripMenuItem.Text = "Яркость";
             this.яркостьToolStripMenuItem.Click += new System.EventHandler(this.ClickColorCorrectionButton);
             // 
@@ -414,7 +416,7 @@ namespace Project_work
             // цветовойБалансToolStripMenuItem
             // 
             this.цветовойБалансToolStripMenuItem.Name = "цветовойБалансToolStripMenuItem";
-            this.цветовойБалансToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.цветовойБалансToolStripMenuItem.Size = new System.Drawing.Size(213, 26);
             this.цветовойБалансToolStripMenuItem.Text = "Цветовой баланс";
             this.цветовойБалансToolStripMenuItem.Click += new System.EventHandler(this.ClickColorBalanceButton);
             // 
@@ -435,7 +437,7 @@ namespace Project_work
             // Scale
             // 
             this.Scale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Scale.Location = new System.Drawing.Point(755, 563);
+            this.Scale.Location = new System.Drawing.Point(755, 623);
             this.Scale.Maximum = 500;
             this.Scale.Name = "Scale";
             this.Scale.Size = new System.Drawing.Size(253, 56);
@@ -444,25 +446,25 @@ namespace Project_work
             this.Scale.Value = 100;
             this.Scale.Scroll += new System.EventHandler(this.ScrollScale);
             // 
-            // Scale_label
+            // scaleLabel
             // 
-            this.Scale_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Scale_label.AutoSize = true;
-            this.Scale_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Scale_label.ForeColor = System.Drawing.Color.White;
-            this.Scale_label.Location = new System.Drawing.Point(952, 589);
-            this.Scale_label.Name = "Scale_label";
-            this.Scale_label.Size = new System.Drawing.Size(56, 20);
-            this.Scale_label.TabIndex = 9;
-            this.Scale_label.Text = "100 %";
+            this.scaleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.scaleLabel.AutoSize = true;
+            this.scaleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.scaleLabel.ForeColor = System.Drawing.Color.White;
+            this.scaleLabel.Location = new System.Drawing.Point(952, 648);
+            this.scaleLabel.Name = "scaleLabel";
+            this.scaleLabel.Size = new System.Drawing.Size(56, 20);
+            this.scaleLabel.TabIndex = 9;
+            this.scaleLabel.Text = "100 %";
             // 
             // Prop_panel
             // 
-            this.Prop_panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Prop_panel.AutoSize = true;
-            this.Prop_panel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Prop_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Prop_panel.Controls.Add(this.choose_color_button);
+            this.Prop_panel.Controls.Add(this.TransparencyUpDown);
+            this.Prop_panel.Controls.Add(this.TransparencyLabel);
+            this.Prop_panel.Controls.Add(this.colorButtonChoose);
             this.Prop_panel.Controls.Add(this.current_color_label);
             this.Prop_panel.Controls.Add(this.opacity_UpDown);
             this.Prop_panel.Controls.Add(this.brush_width_label);
@@ -476,27 +478,50 @@ namespace Project_work
             this.Prop_panel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Prop_panel.Location = new System.Drawing.Point(756, 41);
             this.Prop_panel.Name = "Prop_panel";
-            this.Prop_panel.Size = new System.Drawing.Size(252, 200);
+            this.Prop_panel.Size = new System.Drawing.Size(252, 256);
             this.Prop_panel.TabIndex = 13;
             // 
-            // choose_color_button
+            // TransparencyUpDown
             // 
-            this.choose_color_button.BackColor = System.Drawing.Color.DarkOrange;
-            this.choose_color_button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.choose_color_button.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.choose_color_button.FlatAppearance.BorderSize = 0;
-            this.choose_color_button.Location = new System.Drawing.Point(117, 175);
-            this.choose_color_button.Name = "choose_color_button";
-            this.choose_color_button.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.choose_color_button.Size = new System.Drawing.Size(130, 20);
-            this.choose_color_button.TabIndex = 15;
-            this.choose_color_button.UseVisualStyleBackColor = false;
-            this.choose_color_button.Click += new System.EventHandler(this.ClickChooseColorButton);
+            this.TransparencyUpDown.BackColor = System.Drawing.Color.DimGray;
+            this.TransparencyUpDown.Location = new System.Drawing.Point(164, 183);
+            this.TransparencyUpDown.Name = "TransparencyUpDown";
+            this.TransparencyUpDown.Size = new System.Drawing.Size(81, 22);
+            this.TransparencyUpDown.TabIndex = 17;
+            this.TransparencyUpDown.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.TransparencyUpDown.ValueChanged += new System.EventHandler(this.ChangeValueTransparencyUpDown);
+            // 
+            // TransparencyLabel
+            // 
+            this.TransparencyLabel.AutoSize = true;
+            this.TransparencyLabel.Location = new System.Drawing.Point(5, 185);
+            this.TransparencyLabel.Name = "TransparencyLabel";
+            this.TransparencyLabel.Size = new System.Drawing.Size(106, 17);
+            this.TransparencyLabel.TabIndex = 16;
+            this.TransparencyLabel.Text = "Прозрачность:";
+            // 
+            // colorButtonChoose
+            // 
+            this.colorButtonChoose.BackColor = System.Drawing.Color.DarkOrange;
+            this.colorButtonChoose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.colorButtonChoose.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.colorButtonChoose.FlatAppearance.BorderSize = 0;
+            this.colorButtonChoose.Location = new System.Drawing.Point(117, 219);
+            this.colorButtonChoose.Name = "colorButtonChoose";
+            this.colorButtonChoose.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.colorButtonChoose.Size = new System.Drawing.Size(130, 20);
+            this.colorButtonChoose.TabIndex = 15;
+            this.colorButtonChoose.UseVisualStyleBackColor = false;
+            this.colorButtonChoose.Click += new System.EventHandler(this.ClickChooseColorButton);
             // 
             // current_color_label
             // 
             this.current_color_label.AutoSize = true;
-            this.current_color_label.Location = new System.Drawing.Point(7, 178);
+            this.current_color_label.Location = new System.Drawing.Point(7, 222);
             this.current_color_label.Name = "current_color_label";
             this.current_color_label.Size = new System.Drawing.Size(104, 17);
             this.current_color_label.TabIndex = 14;
@@ -626,7 +651,7 @@ namespace Project_work
             this.scale_changing_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.scale_changing_label.AutoSize = true;
             this.scale_changing_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.scale_changing_label.Location = new System.Drawing.Point(764, 525);
+            this.scale_changing_label.Location = new System.Drawing.Point(764, 585);
             this.scale_changing_label.Name = "scale_changing_label";
             this.scale_changing_label.Size = new System.Drawing.Size(184, 17);
             this.scale_changing_label.TabIndex = 10;
@@ -716,13 +741,14 @@ namespace Project_work
             this.LayerAddButton.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.LayerAddButton.FlatAppearance.BorderSize = 0;
             this.LayerAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LayerAddButton.Location = new System.Drawing.Point(965, 490);
+            this.LayerAddButton.Location = new System.Drawing.Point(965, 550);
             this.LayerAddButton.Name = "LayerAddButton";
             this.LayerAddButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.LayerAddButton.Size = new System.Drawing.Size(20, 16);
             this.LayerAddButton.TabIndex = 23;
             this.toolTip1.SetToolTip(this.LayerAddButton, "Создать новый слой");
             this.LayerAddButton.UseVisualStyleBackColor = false;
+            this.LayerAddButton.Click += new System.EventHandler(this.ClickAddLayerButton);
             // 
             // LayerDeleteButton
             // 
@@ -733,13 +759,14 @@ namespace Project_work
             this.LayerDeleteButton.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.LayerDeleteButton.FlatAppearance.BorderSize = 0;
             this.LayerDeleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LayerDeleteButton.Location = new System.Drawing.Point(990, 490);
+            this.LayerDeleteButton.Location = new System.Drawing.Point(990, 550);
             this.LayerDeleteButton.Name = "LayerDeleteButton";
             this.LayerDeleteButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.LayerDeleteButton.Size = new System.Drawing.Size(17, 16);
             this.LayerDeleteButton.TabIndex = 24;
             this.toolTip1.SetToolTip(this.LayerDeleteButton, "Удалить выбранный слой");
             this.LayerDeleteButton.UseVisualStyleBackColor = false;
+            this.LayerDeleteButton.Click += new System.EventHandler(this.ClickLayerDeleteButton);
             // 
             // LayerDownButton
             // 
@@ -750,7 +777,7 @@ namespace Project_work
             this.LayerDownButton.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.LayerDownButton.FlatAppearance.BorderSize = 0;
             this.LayerDownButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LayerDownButton.Location = new System.Drawing.Point(922, 490);
+            this.LayerDownButton.Location = new System.Drawing.Point(922, 550);
             this.LayerDownButton.Name = "LayerDownButton";
             this.LayerDownButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.LayerDownButton.Size = new System.Drawing.Size(20, 16);
@@ -768,7 +795,7 @@ namespace Project_work
             this.LayerUpButton.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.LayerUpButton.FlatAppearance.BorderSize = 0;
             this.LayerUpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LayerUpButton.Location = new System.Drawing.Point(896, 490);
+            this.LayerUpButton.Location = new System.Drawing.Point(896, 550);
             this.LayerUpButton.Name = "LayerUpButton";
             this.LayerUpButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.LayerUpButton.Size = new System.Drawing.Size(20, 16);
@@ -777,18 +804,18 @@ namespace Project_work
             this.LayerUpButton.UseVisualStyleBackColor = false;
             this.LayerUpButton.Click += new System.EventHandler(this.ClickLayerButtonUp);
             // 
-            // Layer_panel
+            // layerPanel
             // 
-            this.Layer_panel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Layer_panel.AutoScroll = true;
-            this.Layer_panel.BackColor = System.Drawing.Color.Transparent;
-            this.Layer_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Layer_panel.Location = new System.Drawing.Point(755, 257);
-            this.Layer_panel.Name = "Layer_panel";
-            this.Layer_panel.Size = new System.Drawing.Size(253, 227);
-            this.Layer_panel.TabIndex = 22;
+            this.layerPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.layerPanel.AutoScroll = true;
+            this.layerPanel.BackColor = System.Drawing.Color.Transparent;
+            this.layerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.layerPanel.Location = new System.Drawing.Point(755, 317);
+            this.layerPanel.Name = "layerPanel";
+            this.layerPanel.Size = new System.Drawing.Size(253, 227);
+            this.layerPanel.TabIndex = 22;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -804,7 +831,7 @@ namespace Project_work
             this.Controls.Add(this.Color_correction_button);
             this.Controls.Add(this.Eraser_button);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.Scale_label);
+            this.Controls.Add(this.scaleLabel);
             this.Controls.Add(this.Prop_panel);
             this.Controls.Add(this.Apply_button);
             this.Controls.Add(this.Scale);
@@ -814,12 +841,12 @@ namespace Project_work
             this.Controls.Add(this.create_area);
             this.Controls.Add(this.cropping);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.Layer_panel);
+            this.Controls.Add(this.layerPanel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ForeColor = System.Drawing.Color.White;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(1050, 720);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.ShowIcon = false;
             this.Text = "Graphics Editor";
             ((System.ComponentModel.ISupportInitialize)(this.workSpace)).EndInit();
@@ -829,6 +856,7 @@ namespace Project_work
             ((System.ComponentModel.ISupportInitialize)(this.Scale)).EndInit();
             this.Prop_panel.ResumeLayout(false);
             this.Prop_panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TransparencyUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.opacity_UpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.HeightUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.WidthUpDown)).EndInit();
@@ -867,7 +895,7 @@ namespace Project_work
         private System.Windows.Forms.ToolStripMenuItem цветовойТонToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem цветовойБалансToolStripMenuItem;
         private System.Windows.Forms.TrackBar Scale;
-        private System.Windows.Forms.Label Scale_label;
+        private System.Windows.Forms.Label scaleLabel;
         private System.Windows.Forms.ToolStripMenuItem вырезатьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem копироватьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem вставитьToolStripMenuItem;
@@ -887,16 +915,18 @@ namespace Project_work
         private System.Windows.Forms.NumericUpDown opacity_UpDown;
         private System.Windows.Forms.Label brush_width_label;
         private System.Windows.Forms.Label Brush_label;
-        private System.Windows.Forms.Button choose_color_button;
-        private System.Windows.Forms.ColorDialog Choose_color;
+        private System.Windows.Forms.Button colorButtonChoose;
+        private System.Windows.Forms.ColorDialog colorChoose;
         private System.Windows.Forms.Button Eraser_button;
         private System.Windows.Forms.Button Color_correction_button;
         private System.Windows.Forms.Button Color_balance_button;
-        private System.Windows.Forms.Panel Layer_panel;
+        private System.Windows.Forms.Panel layerPanel;
         private System.Windows.Forms.Button LayerAddButton;
         private System.Windows.Forms.Button LayerDeleteButton;
         private System.Windows.Forms.Button LayerDownButton;
         private System.Windows.Forms.Button LayerUpButton;
+        private System.Windows.Forms.NumericUpDown TransparencyUpDown;
+        private System.Windows.Forms.Label TransparencyLabel;
     }
 }
 

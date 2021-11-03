@@ -17,7 +17,7 @@ namespace Project_work
                 workLayerList[i].isVisibleCheckbox.Click += new System.EventHandler(UpdateVisualLayers);
                 workLayerList[i].preview.Tag = i;
                 workLayerList[i].preview.Click += new System.EventHandler(UpdateActiveLayer);
-                LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref Layer_panel);
+                LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref layerPanel);
             }
         }
 
@@ -28,47 +28,55 @@ namespace Project_work
 
         public void MovingInstrClick(object sender, EventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             this.Cursor = Cursors.SizeAll;
             workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.Move;
         }
 
         private void BrushClick(object sender, EventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.BrushDraw;
-            workLayerList[сurrentLayerIndex].layerPen.Color = choose_color_button.BackColor;
+            workLayerList[сurrentLayerIndex].layerPen.Color = Color.FromArgb((int)((float)TransparencyUpDown.Value * 2.55), colorButtonChoose.BackColor);
         }
 
         private void CreateAreaClick(object sender, EventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.Select;
         }
 
         private void EraserButtonClick(object sender, EventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.Eraser;
         }
 
         private void CroppingClick(object sender, EventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.Cut;
         }
 
         private void ClickPipette(object sender, EventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.Pipitte;
         }
 
         private void ClickChooseColorButton(object sender, EventArgs e)
         {
-            if (Choose_color.ShowDialog() == DialogResult.OK)
+            if (!CheckCorrectIndexAndBitmap()) return;
+            if (colorChoose.ShowDialog() == DialogResult.OK)
             {
-                workLayerList[сurrentLayerIndex].layerPen.Color = Choose_color.Color;
-                choose_color_button.BackColor = Choose_color.Color;
+                workLayerList[сurrentLayerIndex].layerPen.Color = Color.FromArgb((int)((float)TransparencyUpDown.Value * 2.55), colorChoose.Color);
+                colorButtonChoose.BackColor = colorChoose.Color;
             }
         }
 
         private void ClickApplyButton(object sender, EventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Cut
                 & workLayerList[сurrentLayerIndex].currentState == (int)States.WaitToAccept)
             {
@@ -89,10 +97,11 @@ namespace Project_work
 
         private void ClickColorCorrectionButton(object sender, EventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             ColorCorrection ColorCorrForm = new ColorCorrection(ref workLayerList[сurrentLayerIndex].original);
             ColorCorrForm.ShowDialog();
             workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
-            LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
+            LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref layerPanel, ref сurrentLayerIndex);
             workSpace.Refresh();
             System.GC.Collect();
             System.GC.WaitForPendingFinalizers();
@@ -101,10 +110,11 @@ namespace Project_work
 
         private void ClickColorBalanceButton(object sender, EventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             ColorBalancing ColorBalForm = new ColorBalancing(ref workLayerList[сurrentLayerIndex].original);
             ColorBalForm.ShowDialog();
             workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
-            LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
+            LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref layerPanel, ref сurrentLayerIndex);
             workSpace.Refresh();
             System.GC.Collect();
             System.GC.WaitForPendingFinalizers();

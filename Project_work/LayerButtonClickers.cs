@@ -15,13 +15,13 @@ namespace Project_work
                 workLayerList[сurrentLayerIndex + 1] = workLayerList[сurrentLayerIndex];
                 workLayerList[сurrentLayerIndex] = Buff;
                 сurrentLayerIndex++;
-                LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref Layer_panel);
+                LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref layerPanel);
                 for (int i = 0; i < workLayerList.Count; i++) workLayerList[i].preview.Tag = i;
                 workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
                 workSpace.Refresh();
 
                 Scale.Value = workLayerList[сurrentLayerIndex].scale;
-                Scale_label.Text = String.Format("{0} %", Scale.Value);
+                scaleLabel.Text = String.Format("{0} %", Scale.Value);
             }
 
         }
@@ -34,14 +34,42 @@ namespace Project_work
                 workLayerList[сurrentLayerIndex - 1] = workLayerList[сurrentLayerIndex];
                 workLayerList[сurrentLayerIndex] = Buff;
                 сurrentLayerIndex -= 1;
-                LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref Layer_panel);
+                LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref layerPanel);
                 for (int i = 0; i < workLayerList.Count; i++) workLayerList[i].preview.Tag = i;
                 workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
                 workSpace.Refresh();
 
                 Scale.Value = workLayerList[сurrentLayerIndex].scale;
-                Scale_label.Text = String.Format("{0} %", Scale.Value);
+                scaleLabel.Text = String.Format("{0} %", Scale.Value);
             }
+        }
+
+        private void ClickAddLayerButton(object sender, EventArgs e) {
+            Layer creatingVoidLayer = new Layer();
+            Bitmap orig = new Bitmap(workSpace.Width, workSpace.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            creatingVoidLayer.original = orig;
+            workLayerList.Add(creatingVoidLayer);
+
+            сurrentLayerIndex = workLayerList.Count - 1;
+            workLayerList[сurrentLayerIndex].isVisibleCheckbox.Click += new System.EventHandler(UpdateVisualLayers);
+            workLayerList[сurrentLayerIndex].preview.Tag = сurrentLayerIndex;
+            workLayerList[сurrentLayerIndex].preview.Click += new System.EventHandler(UpdateActiveLayer);
+            workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.BrushDraw;
+            workLayerList[сurrentLayerIndex].layerPen.Color = Color.FromArgb((int)((float)TransparencyUpDown.Value * 2.55), colorButtonChoose.BackColor);
+            LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref layerPanel);
+
+            workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+            workSpace.Refresh();
+        }
+
+        private void ClickLayerDeleteButton(object sender, EventArgs e)
+        {
+            workLayerList.Remove(workLayerList[сurrentLayerIndex]);
+            сurrentLayerIndex = workLayerList.Count - 1;
+            LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref layerPanel);
+
+            workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
+            workSpace.Refresh();
         }
     }
 }

@@ -18,6 +18,24 @@ namespace Project_work
             new LayerVisualiser();
         }
 
+        private bool CheckCorrectIndexAndBitmap() {
+            if (сurrentLayerIndex > workLayerList.Count - 1)
+            {
+                return false;
+            }
+
+            else if (сurrentLayerIndex < 0)
+            {
+                return false;
+            }
+
+            else if (workLayerList[сurrentLayerIndex].original == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private void UpdateVisualLayers(object sender, EventArgs e)
         {
             for (int i = 0; i < workLayerList.Count; i++)
@@ -33,16 +51,18 @@ namespace Project_work
 
         private void UpdateActiveLayer(object sender, EventArgs e) {
             Button from_sender = sender as Button;
+            if (!CheckCorrectIndexAndBitmap()) return;
             сurrentLayerIndex = (int)from_sender.Tag;
-            LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
+            LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref layerPanel, ref сurrentLayerIndex);
             workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
             workSpace.Refresh();
             Scale.Value = workLayerList[сurrentLayerIndex].scale;
-            Scale_label.Text = String.Format("{0} %", Scale.Value);
+            scaleLabel.Text = String.Format("{0} %", Scale.Value);
         }
 
         private void MouseDownWorkSpace(object sender, MouseEventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             Point relative_current_position = new Point((e.Location.X - workLayerList[сurrentLayerIndex].shift.X) * 100 / workLayerList[сurrentLayerIndex].scale,
                                                             (e.Location.Y - workLayerList[сurrentLayerIndex].shift.Y) * 100 / workLayerList[сurrentLayerIndex].scale);
             if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Select
@@ -69,6 +89,7 @@ namespace Project_work
 
         private void MouseUpWorkSpace(object sender, MouseEventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 this.contextPicBox.Show(Cursor.Position.X, Cursor.Position.Y);
@@ -98,19 +119,18 @@ namespace Project_work
                 workLayerList[сurrentLayerIndex].shift = workLayerList[сurrentLayerIndex].shiftTmp;
             }
             else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Pipitte) {
-                workLayerList[сurrentLayerIndex].layerPen.Color = pipette.BackColor;
-                choose_color_button.BackColor = pipette.BackColor;
+                workLayerList[сurrentLayerIndex].layerPen.Color = Color.FromArgb((int)((float)TransparencyUpDown.Value * 2.55), pipette.BackColor);
+                colorButtonChoose.BackColor = pipette.BackColor;
                 workLayerList[сurrentLayerIndex].activeInstrument = (int)Instruments.BrushDraw;
-                toolTip1.Show("Цвет выбран!", pipette, 1000);
+                toolTip1.Show("Цвет выбран!", pipette, 700);
             }
 
         }
-
         private void MouseMoveWorkSpace(object sender, MouseEventArgs e)
         {
-            if (сurrentLayerIndex < workLayerList.Count)
-            {
-                Point relativeCurrentPosition = new Point((e.Location.X - workLayerList[сurrentLayerIndex].shift.X) * 100 / workLayerList[сurrentLayerIndex].scale, (e.Location.Y - workLayerList[сurrentLayerIndex].shift.Y) * 100 / workLayerList[сurrentLayerIndex].scale);
+            if (!CheckCorrectIndexAndBitmap()) return;
+
+            Point relativeCurrentPosition = new Point((e.Location.X - workLayerList[сurrentLayerIndex].shift.X) * 100 / workLayerList[сurrentLayerIndex].scale, (e.Location.Y - workLayerList[сurrentLayerIndex].shift.Y) * 100 / workLayerList[сurrentLayerIndex].scale);
 
                 if (e.Button == System.Windows.Forms.MouseButtons.Left & (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.BrushDraw
                     | workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Eraser))
@@ -127,7 +147,7 @@ namespace Project_work
                     }
                     workLayerList[сurrentLayerIndex].lastPosition = relativeCurrentPosition;
                     workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
-                    LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
+                    LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref layerPanel, ref сurrentLayerIndex);
                     workSpace.Refresh();
                     return;
                 }
@@ -143,7 +163,7 @@ namespace Project_work
                     using (Graphics g = Graphics.FromImage(workSpace.Image))
                         g.DrawRectangle(workLayerList[сurrentLayerIndex].selectionPen, workLayerList[сurrentLayerIndex].selection);
                     workSpace.Refresh();
-                    LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref Layer_panel, ref сurrentLayerIndex);
+                    LayerVisualiser.UpdateLayersPreviews(ref workLayerList, ref layerPanel, ref сurrentLayerIndex);
                     return;
                 }
 
@@ -163,18 +183,17 @@ namespace Project_work
                     return;
                 }
                 else if (workLayerList[сurrentLayerIndex].activeInstrument == (int)Instruments.Pipitte) {
-                    if (workLayerList[сurrentLayerIndex].original != null) {
                        Color cutted_color = ((Bitmap)workSpace.Image).GetPixel(e.Location.X, e.Location.Y);
                         pipette.BackColor = cutted_color;
-                    }
                     return;
                 }
-            }
+            
         }
 
         private void ScrollScale(object sender, EventArgs e)
         {
-            Scale_label.Text = String.Format("{0} %", Scale.Value);
+            if (!CheckCorrectIndexAndBitmap()) return;
+            scaleLabel.Text = String.Format("{0} %", Scale.Value);
             workLayerList[сurrentLayerIndex].scale = Scale.Value + 1;
             if (workLayerList[сurrentLayerIndex].original != null)
                 workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
@@ -198,8 +217,15 @@ namespace Project_work
 
         private void ChangeValueOpacityUpDown(object sender, EventArgs e)
         {
+            if (!CheckCorrectIndexAndBitmap()) return;
             workLayerList[сurrentLayerIndex].layerPen.Width = (float)opacity_UpDown.Value;
             workLayerList[сurrentLayerIndex].eraserPen.Width = (float)opacity_UpDown.Value;
+        }
+
+        private void ChangeValueTransparencyUpDown(object sender, EventArgs e)
+        {
+            if (!CheckCorrectIndexAndBitmap()) return;
+            workLayerList[сurrentLayerIndex].layerPen.Color = Color.FromArgb((int)((float)TransparencyUpDown.Value * 2.55), workLayerList[сurrentLayerIndex].layerPen.Color);
         }
     }
 }
