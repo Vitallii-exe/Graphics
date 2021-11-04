@@ -86,6 +86,9 @@
     <Compile Include="ColorBalancing.Designer.cs">
       <DependentUpon>ColorBalancing.cs</DependentUpon>
     </Compile>
+    <Compile Include="ContextMenuClickers.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Import_Export.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

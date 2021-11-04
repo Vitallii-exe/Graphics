@@ -159,7 +159,13 @@ namespace Project_work
                     if (workLayerList[сurrentLayerIndex].original != null)
                         workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
 
-                    workLayerList[сurrentLayerIndex].selection = workLayerList[сurrentLayerIndex].GetSelRectangle(workLayerList[сurrentLayerIndex].startPositionSelection, e.Location);
+                    Rectangle currentSelection = workLayerList[сurrentLayerIndex].GetSelRectangle(workLayerList[сurrentLayerIndex].startPositionSelection, e.Location);
+                if (currentSelection.X < workSpace.Location.X) currentSelection.X = workSpace.Location.X;
+                if (currentSelection.Y < workSpace.Location.Y) currentSelection.Y = workSpace.Location.Y;
+                if (currentSelection.Y + currentSelection.Height > workSpace.Location.Y + workSpace.Height) currentSelection.Height = workSpace.Height - currentSelection.Y;
+                if (currentSelection.X + currentSelection.Width > workSpace.Location.X + workSpace.Width) currentSelection.Width = workSpace.Width - currentSelection.X;
+                    workLayerList[сurrentLayerIndex].selection = currentSelection;
+
                     using (Graphics g = Graphics.FromImage(workSpace.Image))
                         g.DrawRectangle(workLayerList[сurrentLayerIndex].selectionPen, workLayerList[сurrentLayerIndex].selection);
                     workSpace.Refresh();

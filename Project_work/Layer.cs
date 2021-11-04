@@ -38,46 +38,46 @@ public class Layer
         return result;
     }
 
-    public Bitmap CropBitmap(Bitmap source_bitmap, Rectangle cropArea)
+    public Bitmap CropBitmap(Bitmap sourceBitmap, Rectangle cropArea)
     {
         if (cropArea.Width > 0 & cropArea.Height > 0)
         {
             // Обрезает Bitmap по заданному Rectangle
-            Bitmap bmpImage = new Bitmap(source_bitmap);
+            Bitmap bmpImage = new Bitmap(sourceBitmap);
             Bitmap cropped_bitmap = bmpImage.Clone(cropArea, bmpImage.PixelFormat);
             return cropped_bitmap;
         }
-        else return source_bitmap;
+        else return sourceBitmap;
     }
 
     public Rectangle GetSelRectangle(Point orig, Point location)
     {
         // Создает Rectangle по двум точкам - orig и location
         int deltaX = location.X - orig.X, deltaY = location.Y - orig.Y;
-        Size size_area = new Size(Math.Abs(deltaX), Math.Abs(deltaY));
-        Rectangle selected_square = new Rectangle();
+        Size sizeArea = new Size(Math.Abs(deltaX), Math.Abs(deltaY));
+        Rectangle selectedSquare = new Rectangle();
 
         if (deltaX >= 0 & deltaY >= 0)
         {
-            selected_square = new Rectangle(orig, size_area);
-            return selected_square;
+            selectedSquare = new Rectangle(orig, sizeArea);
+            return selectedSquare;
         }
         else if (deltaX < 0 & deltaY > 0)
         {
-            selected_square = new Rectangle(location.X, orig.Y, size_area.Width, size_area.Height);
-            return selected_square;
+            selectedSquare = new Rectangle(location.X, orig.Y, sizeArea.Width, sizeArea.Height);
+            return selectedSquare;
         }
         else if (deltaX < 0 & deltaY < 0)
         {
-            selected_square = new Rectangle(location, size_area);
-            return selected_square;
+            selectedSquare = new Rectangle(location, sizeArea);
+            return selectedSquare;
         }
         else if (deltaX > 0 & deltaY < 0)
         {
-            selected_square = new Rectangle(orig.X, location.Y, size_area.Width, size_area.Height);
-            return selected_square;
+            selectedSquare = new Rectangle(orig.X, location.Y, sizeArea.Width, sizeArea.Height);
+            return selectedSquare;
         }
-        else return selected_square;
+        else return selectedSquare;
     }
 
     public static Bitmap BrushDraw(ref Bitmap source, ref Pen brush_pen, ref Point start_point, ref Point finish_point, bool Erase=false) 

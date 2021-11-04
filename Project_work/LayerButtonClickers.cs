@@ -44,13 +44,24 @@ namespace Project_work
             }
         }
 
-        private void ClickAddLayerButton(object sender, EventArgs e) {
+        private void AddLayer(Bitmap pieceToNewLayer = null) {
             Layer creatingVoidLayer = new Layer();
-            Bitmap orig = new Bitmap(workSpace.Width, workSpace.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap orig;
+            if (pieceToNewLayer != null) orig = pieceToNewLayer;
+            else orig = new Bitmap(workSpace.Width, workSpace.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             creatingVoidLayer.original = orig;
-            workLayerList.Add(creatingVoidLayer);
+            if (сurrentLayerIndex + 1 < workLayerList.Count)
+            {
+                workLayerList.Insert(сurrentLayerIndex + 1, creatingVoidLayer);
+                сurrentLayerIndex = сurrentLayerIndex + 1;
+            }
 
-            сurrentLayerIndex = workLayerList.Count - 1;
+            else
+            {
+                workLayerList.Add(creatingVoidLayer);
+                сurrentLayerIndex = workLayerList.Count - 1;
+            }
+
             workLayerList[сurrentLayerIndex].isVisibleCheckbox.Click += new System.EventHandler(UpdateVisualLayers);
             workLayerList[сurrentLayerIndex].preview.Tag = сurrentLayerIndex;
             workLayerList[сurrentLayerIndex].preview.Click += new System.EventHandler(UpdateActiveLayer);
@@ -60,6 +71,11 @@ namespace Project_work
 
             workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
             workSpace.Refresh();
+
+        }
+
+        private void ClickAddLayerButton(object sender, EventArgs e) {
+            AddLayer();
         }
 
         private void ClickLayerDeleteButton(object sender, EventArgs e)
@@ -67,7 +83,7 @@ namespace Project_work
             workLayerList.Remove(workLayerList[сurrentLayerIndex]);
             сurrentLayerIndex = workLayerList.Count - 1;
             LayerVisualiser.AddVisualLayer(ref workLayerList, ref сurrentLayerIndex, ref layerPanel);
-
+            for (int i = 0; i < workLayerList.Count; i++) workLayerList[i].preview.Tag = i;
             workSpace.Image = Layer.DrawLayersList(ref workLayerList, ref workSpace);
             workSpace.Refresh();
         }

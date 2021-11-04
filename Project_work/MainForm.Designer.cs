@@ -256,12 +256,14 @@ namespace Project_work
             this.скопироватьНаНовыйСлойToolStripMenuItem.Name = "скопироватьНаНовыйСлойToolStripMenuItem";
             this.скопироватьНаНовыйСлойToolStripMenuItem.Size = new System.Drawing.Size(252, 24);
             this.скопироватьНаНовыйСлойToolStripMenuItem.Text = "Скопировать на новый слой";
+            this.скопироватьНаНовыйСлойToolStripMenuItem.Click += new System.EventHandler(this.CopyToNewLayerContextClick);
             // 
             // вырезатьНаНовыйСлойToolStripMenuItem
             // 
             this.вырезатьНаНовыйСлойToolStripMenuItem.Name = "вырезатьНаНовыйСлойToolStripMenuItem";
             this.вырезатьНаНовыйСлойToolStripMenuItem.Size = new System.Drawing.Size(252, 24);
             this.вырезатьНаНовыйСлойToolStripMenuItem.Text = "Вырезать на новый слой";
+            this.вырезатьНаНовыйСлойToolStripMenuItem.Click += new System.EventHandler(this.CutToNewLayerContextClick);
             // 
             // menuStrip1
             // 
