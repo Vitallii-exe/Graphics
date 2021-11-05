@@ -231,19 +231,21 @@ namespace Project_work
             this.вырезатьНаНовыйСлойToolStripMenuItem});
             this.contextPicBox.Name = "contextMenuStrip1";
             this.contextPicBox.ShowImageMargin = false;
-            this.contextPicBox.Size = new System.Drawing.Size(253, 124);
+            this.contextPicBox.Size = new System.Drawing.Size(253, 152);
             // 
             // вырезатьToolStripMenuItem
             // 
             this.вырезатьToolStripMenuItem.Name = "вырезатьToolStripMenuItem";
             this.вырезатьToolStripMenuItem.Size = new System.Drawing.Size(252, 24);
             this.вырезатьToolStripMenuItem.Text = "Вырезать";
+            this.вырезатьToolStripMenuItem.Click += new System.EventHandler(this.ClickCutToolStripMenuItem);
             // 
             // копироватьToolStripMenuItem
             // 
             this.копироватьToolStripMenuItem.Name = "копироватьToolStripMenuItem";
             this.копироватьToolStripMenuItem.Size = new System.Drawing.Size(252, 24);
             this.копироватьToolStripMenuItem.Text = "Копировать";
+            this.копироватьToolStripMenuItem.Click += new System.EventHandler(this.ClickCopyToolStripMenuItem);
             // 
             // вставитьToolStripMenuItem
             // 
