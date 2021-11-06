@@ -231,7 +231,7 @@ namespace Project_work
             this.вырезатьНаНовыйСлойToolStripMenuItem});
             this.contextPicBox.Name = "contextMenuStrip1";
             this.contextPicBox.ShowImageMargin = false;
-            this.contextPicBox.Size = new System.Drawing.Size(253, 152);
+            this.contextPicBox.Size = new System.Drawing.Size(253, 124);
             // 
             // вырезатьToolStripMenuItem
             // 
@@ -848,11 +848,13 @@ namespace Project_work
             this.Controls.Add(this.layerPanel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ForeColor = System.Drawing.Color.White;
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(1050, 720);
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.Text = "Graphics Editor";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyPressMainForm);
             ((System.ComponentModel.ISupportInitialize)(this.workSpace)).EndInit();
             this.contextPicBox.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);

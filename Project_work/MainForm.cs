@@ -233,5 +233,12 @@ namespace Project_work
             if (!CheckCorrectIndexAndBitmap()) return;
             workLayerList[сurrentLayerIndex].layerPen.Color = Color.FromArgb((int)((float)TransparencyUpDown.Value * 2.55), workLayerList[сurrentLayerIndex].layerPen.Color);
         }
+
+        private void KeyPressMainForm(object sender, KeyPressEventArgs e)
+        {
+            if (!CheckCorrectIndexAndBitmap()) return;
+            if (e.KeyChar == 3) CopyLayerToClipboard();
+            if (e.KeyChar == 24) CutLayerToClipboard();
+        }
     }
 }
